@@ -21,6 +21,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vsconfig
 
 # Gradle cache directory
 .gradle/
@@ -60,3 +61,6 @@ crashlytics-build.properties
 
 # Virtual environments
 /[Vv]env/
+
+# Models
+/[Rr]esults/
