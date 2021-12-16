@@ -13,7 +13,22 @@ public class BasicAgent : Agent
     [SerializeField] private Material loseMaterial;
     [SerializeField] private MeshRenderer platformRenderer;
 
+    public GameObject ground;
+
+    Rigidbody m_AgentRb;
+
     private Collider[] hitGroundColliders;
+    public float jumpingTime;
+    public float jumpTime;
+    public float fallingForce;
+
+    Vector3 m_JumpTargetPos;
+    Vector3 m_JumpStartingPos;
+
+    public override void Initialize()
+    {
+        m_AgentRb = GetComponent<Rigidbody>();
+    }
 
     public override void OnEpisodeBegin()
     {
@@ -26,39 +41,97 @@ public class BasicAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(rewardTransform.localPosition);
+        sensor.AddObservation((m_AgentRb.position - ground.transform.position)/20f);
+        sensor.AddObservation(CheckOnAir() ? 1 : 0);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        AddReward(-0.00001f);
+        AddReward(-0.0005f);
 
         if (StepCount == MaxStep)
         {
             platformRenderer.material = loseMaterial;
         }
 
-        float moveX = actions.ContinuousActions[0];
-        float moveZ = actions.ContinuousActions[1];
-        float jump = (actions.ContinuousActions[2] > 0) ? 1f : 0f;
-        float moveSpeed = 3f;
-        
-        Vector3 direction = new Vector3(moveX, 0f, moveZ);
-        if (jump == 1f && CheckOnGround())
+        ActionSegment<int> act = actions.DiscreteActions;
+
+        Vector3 direction = Vector3.zero;
+        Vector3 rotateDirection = Vector3.zero;
+        int directionForwardAction = act[0];
+        int rotateDirectionAction = act[1];
+        int directionSideAction = act[2];
+        int jumpAction = act[3];
+
+        if (directionForwardAction == 1)
         {
-            GetComponent<Rigidbody>().AddForce(new Vector3(0f, 5f, 0f), ForceMode.VelocityChange);
+            direction = 1f * transform.forward;
+        }else if (directionForwardAction == 2)
+        {
+            direction = -1f * transform.forward;
         }
-       
-        transform.localPosition += direction * Time.deltaTime * moveSpeed;
+
+        if (rotateDirectionAction == 1)
+        {
+            rotateDirection = transform.up * -1f;
+        }else if (rotateDirectionAction == 2)
+        {
+            rotateDirection = transform.up * 1f;
+        }
+
+        if (directionSideAction == 1)
+        {
+            direction = -0.6f * transform.right;
+        }else if (directionSideAction == 2)
+        {
+            direction = 0.6f * transform.right;
+        }
+
+        if (jumpAction == 1)
+        {
+            if ((jumpingTime <= 0f) && CheckOnAir())
+            {
+                Jump();
+            }
+        }
+
+        transform.Rotate(rotateDirection, Time.fixedDeltaTime * 300f);
+        m_AgentRb.AddForce(direction * 0.8f, ForceMode.VelocityChange);
+
+        if (jumpingTime > 0f)
+        {
+            m_JumpTargetPos =
+                new Vector3(m_AgentRb.position.x, 2.75f, m_AgentRb.position.z) + direction;
+            MoveTowards(m_JumpTargetPos, m_AgentRb, 777, 10);
+        }
+
+        if (!(jumpingTime > 0f) && !CheckOnGround())
+        {
+            m_AgentRb.AddForce(Vector3.down * fallingForce, ForceMode.Acceleration);
+        }
+        jumpingTime -= Time.fixedDeltaTime;
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
-        continuousActions[0] = Input.GetAxisRaw("Horizontal");
-        continuousActions[1] = Input.GetAxisRaw("Vertical");
-        continuousActions[2] = Input.GetKey(KeyCode.Space) ? 1 : 0;
+        ActionSegment<int> discreteActionsOut = actionsOut.DiscreteActions;
+        if (Input.GetKey(KeyCode.D))
+        {
+            discreteActionsOut[1] = 2;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            discreteActionsOut[0] = 1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            discreteActionsOut[1] = 1;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            discreteActionsOut[0] = 2;
+        }
+        discreteActionsOut[3] = Input.GetKey(KeyCode.Space) ? 1 : 0;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -93,5 +166,39 @@ public class BasicAgent : Agent
             }
         }
         return grounded;
+    }
+
+    private bool CheckOnAir()
+    {
+        RaycastHit hit;
+        Physics.Raycast(transform.position + new Vector3(0, -0.05f, 0), -Vector3.up, out hit,
+            1f);
+
+        if (hit.collider != null &&
+            (hit.collider.CompareTag("wall") || hit.collider.CompareTag("platform"))
+            && hit.normal.y > 0.95f)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void Jump()
+    {
+        jumpingTime = 0.2f;
+        m_JumpStartingPos = m_AgentRb.position;
+    }
+
+    void MoveTowards(
+        Vector3 targetPos, Rigidbody rb, float targetVel, float maxVel)
+    {
+        var moveToPos = targetPos - rb.worldCenterOfMass;
+        var velocityTarget = Time.fixedDeltaTime * targetVel * moveToPos;
+        if (float.IsNaN(velocityTarget.x) == false)
+        {
+            rb.velocity = Vector3.MoveTowards(
+                rb.velocity, velocityTarget, maxVel);
+        }
     }
 }
