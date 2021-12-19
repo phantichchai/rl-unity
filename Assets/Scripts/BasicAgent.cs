@@ -8,6 +8,7 @@ using Unity.MLAgents.Actuators;
 public class BasicAgent : Agent
 {
     [SerializeField] private Transform rewardTransform;
+    [SerializeField] private Transform smallRewardTransform;
     [SerializeField] private Transform wallTransform;
     [SerializeField] private Material winMaterial;
     [SerializeField] private Material loseMaterial;
@@ -22,9 +23,12 @@ public class BasicAgent : Agent
     public float jumpTime;
     public float fallingForce;
 
+    private int countReward;
+
     Vector3 m_JumpTargetPos;
     Vector3 m_JumpStartingPos;
 
+    
     public override void Initialize()
     {
         m_AgentRb = GetComponent<Rigidbody>();
@@ -33,16 +37,20 @@ public class BasicAgent : Agent
     public override void OnEpisodeBegin()
     {
         transform.localPosition = new Vector3(Random.Range(-5f, 5f), 1f, Random.Range(-3f, 3f));
+        rewardTransform.gameObject.SetActive(true);
+        smallRewardTransform.gameObject.SetActive(true);
         rewardTransform.localPosition = new Vector3(Random.Range(-4f, 4f), 1f, Random.Range(-2f, 2f));
+        smallRewardTransform.localPosition = new Vector3(Random.Range(-4f, 4f), 0.75f, Random.Range(-2f, 2f));
         wallTransform.localPosition = new Vector3(Random.Range(-3f, 3f), 1f, 0f);
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().rotation = Quaternion.identity;
+        countReward = 0;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation((m_AgentRb.position - ground.transform.position)/20f);
-        sensor.AddObservation(CheckOnAir() ? 1 : 0);
+        sensor.AddObservation(CanJump() ? 1 : 0);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -89,7 +97,7 @@ public class BasicAgent : Agent
 
         if (jumpAction == 1)
         {
-            if ((jumpingTime <= 0f) && CheckOnAir())
+            if ((jumpingTime <= 0f) && CanJump())
             {
                 Jump();
             }
@@ -139,12 +147,25 @@ public class BasicAgent : Agent
         if (other.TryGetComponent<Reward>(out Reward reward))
         {
             AddReward(+1f);
-            platformRenderer.material = winMaterial;
-            EndEpisode();
-        }else if (other.TryGetComponent<Border>(out Border border))
+            rewardTransform.gameObject.SetActive(false);
+            countReward++;
+        }
+        else if (other.TryGetComponent<SmallReward>(out SmallReward smallReward))
+        {
+            AddReward(+0.5f);
+            smallRewardTransform.gameObject.SetActive(false);
+            countReward++;
+        }
+        else if (other.TryGetComponent<Border>(out Border border))
         {
             AddReward(-1f);
             platformRenderer.material = loseMaterial;
+            EndEpisode();
+        }
+
+        if (countReward > 1)
+        {
+            platformRenderer.material = winMaterial;
             EndEpisode();
         }
     }
@@ -168,7 +189,7 @@ public class BasicAgent : Agent
         return grounded;
     }
 
-    private bool CheckOnAir()
+    private bool CanJump()
     {
         RaycastHit hit;
         Physics.Raycast(transform.position + new Vector3(0, -0.05f, 0), -Vector3.up, out hit,
