@@ -1,12 +1,15 @@
 # rl-unity
 
-![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.1.png)
+![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.2.png)
 
 ## Neural Networks
-BasicAgent-2233119
+2RewardAgent-3573465
 
 ## Description
-Agent can get reward by move position to resource and jump cross wall look normal.  
+Agent can get reward by move position to resource and jump cross wall look normal
+Addition one resource for collect more action before end of episode
+Add frequecy detection sensor to 7  
 
 ## Behaviors
-BasicAgentJump.yaml
+BasicAgent.yaml
+-> 2RewardAgent behavior
