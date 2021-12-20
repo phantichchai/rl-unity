@@ -1,6 +1,7 @@
 # rl-unity
 
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.2.png)
+link video Collector Agent: https://www.youtube.com/watch?v=skblhNFwr-M
 
 ## Neural Networks
 2RewardAgent-3573465 (PPO)
