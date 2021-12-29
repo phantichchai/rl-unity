@@ -28,7 +28,6 @@ public class BasicAgent : Agent
     Vector3 m_JumpTargetPos;
     Vector3 m_JumpStartingPos;
 
-    
     public override void Initialize()
     {
         m_AgentRb = GetComponent<Rigidbody>();

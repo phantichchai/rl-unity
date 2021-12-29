@@ -15,3 +15,5 @@ Add frequecy detection sensor to 7.
 
 ## Behaviors
 BasicAgent.yaml :arrow_right: 2RewardAgent behavior
+
+## Game System Environment
