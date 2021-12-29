@@ -1,4 +1,4 @@
-# rl-unity
+# Collect Resource Game with Reinforcement Learning
 
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.2.png)
 link video Collector Agent: https://www.youtube.com/watch?v=skblhNFwr-M
@@ -17,3 +17,13 @@ Add frequecy detection sensor to 7.
 BasicAgent.yaml :arrow_right: 2RewardAgent behavior
 
 ## Game System Environment
+![](https://github.com/phantichchai/rl-unity/blob/main/Image/environment.png)
+
+**In Scence:**
+- Fields
+- Boxs
+- Walls
+- Elevator
+- Items
+- Collector Agent
+- Disruptor Agent
