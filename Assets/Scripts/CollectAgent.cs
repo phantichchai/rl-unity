@@ -7,33 +7,59 @@ using Unity.MLAgents.Actuators;
 
 public class CollectAgent : Agent
 {
-    [SerializeField] private Transform rewardTransform;
-    [SerializeField] private GameObject ground;
+    [SerializeField]
+    private GameObject destinationGameObject;
+    [SerializeField]
+    private GameObject[] gameObjects;
+    private List<Vector3> originPosition;
+    private Vector3 agentStartPosition;
 
-    Rigidbody m_AgentRb;
+    private AgentController agentController;
+    private float jumpingTime;
+    private float fallingForce;
+    private Vector3 jumpTargetPosition;
 
-    private Collider[] hitGroundColliders;
-    public float jumpingTime;
-    public float jumpTime;
-    public float fallingForce;
-
-    Vector3 m_JumpTargetPos;
-    Vector3 m_JumpStartingPos;
+    private Rigidbody agentRB;
 
     public override void Initialize()
     {
-        m_AgentRb = GetComponent<Rigidbody>();
+        agentController = GetComponent<AgentController>();
+        jumpingTime = agentController.JumpingTime;
+        agentRB = GetComponent<Rigidbody>();
+        fallingForce = agentController.FallingForce;
+        originPosition = new List<Vector3>();
+        agentStartPosition = transform.position;
+        foreach (GameObject gameObject in gameObjects)
+        {
+            originPosition.Add(gameObject.transform.position);
+        }
+    }
+
+    public override void OnEpisodeBegin()
+    {
+        transform.localPosition = agentStartPosition;
+        for (int i = 0; i < gameObjects.Length; i++)
+        {
+            gameObjects[i].transform.position = originPosition[i];
+            gameObjects[i].transform.rotation = Quaternion.identity;
+            if (gameObjects[i].TryGetComponent<Item>(out Item item))
+            {
+                item.transform.SetParent(null);
+                item.gameObject.GetComponent<SphereCollider>().isTrigger = true;
+            }
+        }
+        agentRB.velocity = Vector3.zero;
+        agentRB.rotation = Quaternion.identity;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation((m_AgentRb.position - ground.transform.position) / 20f);
-        sensor.AddObservation(CheckOnAir() ? 1 : 0);
+        sensor.AddObservation(agentController.CanJump());
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        AddReward(-0.0005f);
+        AddReward(-0.00005f);
 
         ActionSegment<int> act = actions.DiscreteActions;
 
@@ -44,13 +70,15 @@ public class CollectAgent : Agent
         int directionSideAction = act[2];
         int jumpAction = act[3];
 
+        bool onGround = agentController.CheckOnGround();
+
         if (directionForwardAction == 1)
         {
-            direction = 1f * transform.forward;
+            direction = (onGround ? 1f : 0.5f) * 1f * transform.forward;
         }
         else if (directionForwardAction == 2)
         {
-            direction = -1f * transform.forward;
+            direction = (onGround ? 1f : 0.5f) * -1f * transform.forward;
         }
 
         if (rotateDirectionAction == 1)
@@ -73,27 +101,33 @@ public class CollectAgent : Agent
 
         if (jumpAction == 1)
         {
-            if ((jumpingTime <= 0f) && CheckOnAir())
+            if ((jumpingTime <= 0f) && agentController.CanJump())
             {
-                Jump();
+                jumpingTime = 0.2f;
             }
         }
 
-        transform.Rotate(rotateDirection, Time.fixedDeltaTime * 300f);
-        m_AgentRb.AddForce(direction * 0.8f, ForceMode.VelocityChange);
+        transform.Rotate(rotateDirection, Time.fixedDeltaTime * agentController.RotateSpeed);
+        agentRB.AddForce(direction * agentController.MoveSpeed * agentController.CheckOnFieldType(), ForceMode.VelocityChange);
 
         if (jumpingTime > 0f)
         {
-            m_JumpTargetPos =
-                new Vector3(m_AgentRb.position.x, 2.75f, m_AgentRb.position.z) + direction;
-            MoveTowards(m_JumpTargetPos, m_AgentRb, 777, 10);
+            jumpTargetPosition = new Vector3(agentRB.position.x, agentRB.position.y + 1f, agentRB.position.z) + direction;
+            agentController.MoveTowards(jumpTargetPosition, agentRB, 300, 5);
         }
 
-        if (!(jumpingTime > 0f) && !CheckOnGround())
+        if (!(jumpingTime > 0f) && !agentController.CheckOnGround())
         {
-            m_AgentRb.AddForce(Vector3.down * fallingForce, ForceMode.Acceleration);
+            agentRB.AddForce(Vector3.down * fallingForce, ForceMode.Acceleration);
         }
         jumpingTime -= Time.fixedDeltaTime;
+
+        if (destinationGameObject.GetComponentsInChildren<Item>().Length == 3)
+        {
+            AddReward(+10f);
+            EndEpisode();
+        }
+
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -118,56 +152,16 @@ public class CollectAgent : Agent
         discreteActionsOut[3] = Input.GetKey(KeyCode.Space) ? 1 : 0;
     }
 
-    private bool CheckOnGround()
+    private void OnTriggerEnter(Collider other)
     {
-        hitGroundColliders = new Collider[3];
-        Physics.OverlapBoxNonAlloc(transform.localPosition,
-                new Vector3(0.95f / 2f, 0.5f, 0.95f / 2f),
-                hitGroundColliders,
-                transform.rotation);
-        bool grounded = false;
-        foreach (Collider collider in hitGroundColliders)
+        if (other.TryGetComponent<Item>(out Item item))
         {
-            if (collider != null && collider.transform != transform && (collider.CompareTag("wall") || collider.CompareTag("platform")))
-            {
-                grounded = true;
-                break;
-            }
+            AddReward(+1f);
         }
-        return grounded;
-    }
-
-    private bool CheckOnAir()
-    {
-        RaycastHit hit;
-        Physics.Raycast(transform.position + new Vector3(0, -0.05f, 0), -Vector3.up, out hit,
-            1f);
-
-        if (hit.collider != null &&
-            (hit.collider.CompareTag("wall") || hit.collider.CompareTag("platform"))
-            && hit.normal.y > 0.95f)
+        else if (other.TryGetComponent<Border>(out Border border))
         {
-            return true;
-        }
-
-        return false;
-    }
-
-    private void Jump()
-    {
-        jumpingTime = 0.2f;
-        m_JumpStartingPos = m_AgentRb.position;
-    }
-
-    void MoveTowards(
-        Vector3 targetPos, Rigidbody rb, float targetVel, float maxVel)
-    {
-        var moveToPos = targetPos - rb.worldCenterOfMass;
-        var velocityTarget = Time.fixedDeltaTime * targetVel * moveToPos;
-        if (float.IsNaN(velocityTarget.x) == false)
-        {
-            rb.velocity = Vector3.MoveTowards(
-                rb.velocity, velocityTarget, maxVel);
+            AddReward(-1f);
+            EndEpisode();
         }
     }
 }

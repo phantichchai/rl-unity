@@ -8,6 +8,14 @@ TagManager:
   - wall
   - reward
   - smallReward
+  - ground
+  - box
+  - elevator
+  - pond
+  - desert
+  - ice
+  - destination
+  - item
   layers:
   - Default
   - TransparentFX
