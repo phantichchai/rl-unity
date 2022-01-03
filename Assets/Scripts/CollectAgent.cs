@@ -11,6 +11,14 @@ public class CollectAgent : Agent
     private GameObject destinationGameObject;
     [SerializeField]
     private GameObject[] gameObjects;
+    [SerializeField]
+    private Transform parentTransform;
+    [SerializeField]
+    private Transform[] itemsTransform;
+    [SerializeField]
+    private Transform[] boxsTransform;
+    
+
     private List<Vector3> originPosition;
     private Vector3 agentStartPosition;
 
@@ -28,7 +36,7 @@ public class CollectAgent : Agent
         agentRB = GetComponent<Rigidbody>();
         fallingForce = agentController.FallingForce;
         originPosition = new List<Vector3>();
-        agentStartPosition = transform.position;
+        agentStartPosition = transform.localPosition;
         foreach (GameObject gameObject in gameObjects)
         {
             originPosition.Add(gameObject.transform.position);
@@ -38,14 +46,15 @@ public class CollectAgent : Agent
     public override void OnEpisodeBegin()
     {
         transform.localPosition = agentStartPosition;
+        agentController.Backpack = new Backpack();
         for (int i = 0; i < gameObjects.Length; i++)
         {
             gameObjects[i].transform.position = originPosition[i];
             gameObjects[i].transform.rotation = Quaternion.identity;
-            if (gameObjects[i].TryGetComponent<Item>(out Item item))
+            if (gameObjects[i].GetComponent<Item>() != null)
             {
-                item.transform.SetParent(null);
-                item.gameObject.GetComponent<SphereCollider>().isTrigger = true;
+                gameObjects[i].transform.SetParent(parentTransform);
+                gameObjects[i].GetComponent<SphereCollider>().isTrigger = true;
             }
         }
         agentRB.velocity = Vector3.zero;
@@ -55,13 +64,40 @@ public class CollectAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(agentController.CanJump());
+        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(transform.localEulerAngles);
+        sensor.AddObservation(agentRB.velocity);
+        for (int i = 0; i < itemsTransform.Length; i++)
+        {
+            sensor.AddObservation(itemsTransform[i].localPosition);
+        }
+        for (int i = 0; i < boxsTransform.Length; i++)
+        {
+            sensor.AddObservation(boxsTransform[i].localPosition);
+            sensor.AddObservation(boxsTransform[i].GetComponent<Rigidbody>().velocity);
+        }
+        sensor.AddObservation(destinationGameObject.transform.localPosition);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        AddReward(-0.00005f);
-
         ActionSegment<int> act = actions.DiscreteActions;
+
+        if (StepCount == MaxStep)
+        {
+            if (destinationGameObject.GetComponentsInChildren<Item>().Length == 3)
+            {
+                AddReward(+10f);
+            }
+            else if (destinationGameObject.GetComponentsInChildren<Item>().Length == 2)
+            {
+                AddReward(+5f);
+            }
+            else if (destinationGameObject.GetComponentsInChildren<Item>().Length == 1)
+            {
+                AddReward(+1f);
+            }
+        }
 
         Vector3 direction = Vector3.zero;
         Vector3 rotateDirection = Vector3.zero;
@@ -121,13 +157,6 @@ public class CollectAgent : Agent
             agentRB.AddForce(Vector3.down * fallingForce, ForceMode.Acceleration);
         }
         jumpingTime -= Time.fixedDeltaTime;
-
-        if (destinationGameObject.GetComponentsInChildren<Item>().Length == 3)
-        {
-            AddReward(+10f);
-            EndEpisode();
-        }
-
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -154,14 +183,23 @@ public class CollectAgent : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Item>(out Item item))
-        {
-            AddReward(+1f);
-        }
-        else if (other.TryGetComponent<Border>(out Border border))
+        if (other.TryGetComponent<Border>(out Border border))
         {
             AddReward(-1f);
             EndEpisode();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("destination"))
+        {
+
+            if (destinationGameObject.GetComponentsInChildren<Item>().Length == 3)
+            {
+                AddReward(+10f);
+                EndEpisode();
+            }
         }
     }
 }

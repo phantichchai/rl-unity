@@ -20,11 +20,12 @@ public class AgentController : MonoBehaviour
     public float FallingForce { get => fallingForce; set => fallingForce = value; }
     public float MoveSpeed { get => moveSpeed; }
     public float RotateSpeed { get => rotateSpeed; }
+    public Backpack Backpack { get => backpack; set => backpack = value; }
 
     private void Start()
     {
         AgentRigidbody = GetComponent<Rigidbody>();
-        backpack = new Backpack();
+        Backpack = new Backpack();
     }
 
     public void MoveAgent()
@@ -166,11 +167,11 @@ public class AgentController : MonoBehaviour
         if (other.TryGetComponent<Item>(out Item item))
         {
             other.isTrigger = true;
-            if (!backpack.isBackpackFull())
+            if (!Backpack.isBackpackFull())
             {
                 other.transform.SetParent(transform);
-                other.transform.position = transform.position + Vector3.up * backpack.CountItems();
-                backpack.CollectItem(item);
+                other.transform.position = transform.position + Vector3.up * Backpack.CountItems();
+                Backpack.CollectItem(item);
             }else{
                 other.isTrigger = false;
                 Debug.Log("Can't get more");
@@ -182,9 +183,9 @@ public class AgentController : MonoBehaviour
     {
         if (collision.collider.CompareTag("destination"))
         {
-            if (backpack.CountItems() > 0)
+            if (Backpack.CountItems() > 0)
             {
-                backpack.DropItem();
+                Backpack.DropItem();
                 foreach (Item item in GetComponentsInChildren<Item>())
                 {
                     item.transform.SetParent(collision.transform);
