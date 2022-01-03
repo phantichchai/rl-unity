@@ -1,20 +1,26 @@
 # Collect Resource Game with Reinforcement Learning
 
-![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.2.png)
-link video Collector Agent: https://www.youtube.com/watch?v=skblhNFwr-M
+![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.3.png)
 
 ## Neural Networks
-2RewardAgent-3573465 (PPO)
+CollectAgent-4550370 (PPO) 
+- Fully connect then lstm
 
 ## Description
-Agent can get reward by move position to resource and jump cross wall look normal.
+### **# Problem**
+Agent can't solve the problem by full connect neural network then lstm
 
-Addition one resource for collect more action before end of episode.
+Agent can keep one item and delivery to destination but environment have 3 items for keep
 
-Add frequecy detection sensor to 7.
+### **# Addition**
+Add detection sensor to a lidar like around agent number of ray cast is 14.
+
+Add more observation vector example local position, euler angles, velocity of agent and box local postion, velocity.
+
+Add jump sensor.
 
 ## Behaviors
-BasicAgent.yaml :arrow_right: 2RewardAgent behavior
+CollectAgent.yaml :arrow_right: CollectAgent behavior
 
 ## Game System Environment
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/environment.png)
