@@ -2,6 +2,8 @@
 
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.3.png)
 
+link video agent v0.1.3 https://youtu.be/DwFYMc-BLc0
+
 ## Neural Networks
 CollectAgent-4550370 (PPO) 
 - Fully connect then lstm
