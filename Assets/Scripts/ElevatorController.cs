@@ -21,4 +21,31 @@ public class ElevatorController : MonoBehaviour
             startPosition = tempPosition;
         }
     }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.TryGetComponent<AgentController>(out AgentController agent))
+        {
+            if (agent.transform.localPosition.y > transform.localPosition.y)
+            {
+                Vector3 agentPosition = agent.transform.localPosition;
+                Vector3 agentMovePosition = Vector3.zero;
+
+                if (startPosition.x == endPosition.x)
+                {
+                    agentMovePosition = new Vector3(agentPosition.x, agentPosition.y, endPosition.z - (transform.localPosition.z - agentPosition.z));
+                }
+                else if (startPosition.z == endPosition.z)
+                {
+                    agentMovePosition = new Vector3(endPosition.x - (transform.localPosition.x - agentPosition.x), agentPosition.y, agentPosition.z);
+                }
+                else
+                {
+                    agentMovePosition = new Vector3(endPosition.x - (transform.localPosition.x - agentPosition.x), agentPosition.y, endPosition.z - (transform.localPosition.z - agentPosition.z));
+                }
+
+                agent.transform.localPosition = Vector3.MoveTowards(agentPosition, agentMovePosition, elevatorSpeed * Time.deltaTime);
+            }
+        }
+    }
 }

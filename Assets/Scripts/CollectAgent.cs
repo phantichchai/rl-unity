@@ -15,8 +15,6 @@ public class CollectAgent : Agent
     private Transform parentTransform;
     [SerializeField]
     private Transform[] itemsTransform;
-    [SerializeField]
-    private Transform[] boxsTransform;
     
 
     private List<Vector3> originPosition;
@@ -70,11 +68,6 @@ public class CollectAgent : Agent
         for (int i = 0; i < itemsTransform.Length; i++)
         {
             sensor.AddObservation(itemsTransform[i].localPosition);
-        }
-        for (int i = 0; i < boxsTransform.Length; i++)
-        {
-            sensor.AddObservation(boxsTransform[i].localPosition);
-            sensor.AddObservation(boxsTransform[i].GetComponent<Rigidbody>().velocity);
         }
         sensor.AddObservation(destinationGameObject.transform.localPosition);
     }
