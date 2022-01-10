@@ -16,7 +16,7 @@ behaviors:
       num_layers: 2
       vis_encode_type: simple
       memory:
-        sequence_length: 64
+        sequence_length: 128
         memory_size: 256
     reward_signals:
       extrinsic:
@@ -26,3 +26,45 @@ behaviors:
     max_steps: 40000000
     time_horizon: 160
     summary_freq: 100000
+
+environment_parameters:
+  collect_agent_environment:
+    curriculum:
+      - name: Lesson1
+        completion_criteria:
+          measure: progress
+          behavior: CollectAgent
+          signal_smoothing: true
+          min_lesson_length: 100
+          threshold: 0.1
+        value:
+          sampler_type: uniform
+          sampler_parameters:
+            min_value: 0.0
+            max_value: 1.0
+      - name: Lesson2
+        completion_criteria:
+          measure: progress
+          behavior: CollectAgent
+          signal_smoothing: true
+          min_lesson_length: 100
+          threshold: 0.1
+        value:
+          sampler_type: uniform
+          sampler_parameters:
+            min_value: 1.0
+            max_value: 5.0
+      - name: Lesson3
+        completion_criteria:
+          measure: progress
+          behavior: CollectAgent
+          signal_smoothing: true
+          min_lesson_length: 100
+          threshold: 0.1
+        value:
+          sampler_type: uniform
+          sampler_parameters:
+            min_value: 5.0
+            max_value: 10.0
+      - name: Lesson4
+        value: 10.0

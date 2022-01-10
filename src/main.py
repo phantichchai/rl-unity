@@ -1,9 +1,11 @@
+from mlagents.trainers import optimizer
 from mlagents_envs.base_env import ActionSpec
 import torch.onnx
 import torch
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
 from trainers.policy import NeuralNetwork
+from mlagents.trainers.ppo.optimizer_torch import TorchOptimizer
 
 channel = EngineConfigurationChannel()
 
@@ -57,12 +59,12 @@ for episode in range(num_episode):
     print(f"Total rewards for episode {episode} is {episode_reward}")
 
 
-decision_steps, terminal_steps = unity_env.get_steps(behavior_name)
-input1 = torch.Tensor(decision_steps.obs[0])
-input2 = torch.Tensor(decision_steps.obs[1])
-input3 = torch.Tensor(decision_steps.obs[2])
+# decision_steps, terminal_steps = unity_env.get_steps(behavior_name)
+# input1 = torch.Tensor(decision_steps.obs[0])
+# input2 = torch.Tensor(decision_steps.obs[1])
+# input3 = torch.Tensor(decision_steps.obs[2])
 
-torch.onnx.export(model, (input1, input2, input3), "neuralnetwork.onnx")
+# torch.onnx.export(model, (input1, input2, input3), "neuralnetwork.onnx")
 
 
 unity_env.close()
