@@ -10,6 +10,9 @@ link video agent v0.1.4 https://youtu.be/eSUhizSMniU
 - Curiosity reward
 - Curriculum learning while training
 
+### Policy Architecture
+![](https://github.com/phantichchai/rl-unity/blob/main/Image/CollectAgent-6591537.png)
+
 ## Description
 - Agent can solve the problem by full connect neural network with curiosity reward and curriculum learning.
 - Agent can collect all 3 items for delivery to destination.
