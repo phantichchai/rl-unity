@@ -1,12 +1,14 @@
 # Collect Resource Game with Reinforcement Learning
 
-![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.3.png)
+![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.4.png)
 
-link video agent v0.1.3 https://youtu.be/DwFYMc-BLc0
+link video agent v0.1.3 https://youtu.be/eSUhizSMniU
 
 ## Neural Networks
-CollectAgent-4550370 (PPO) 
-- Fully connect then lstm
+CollectAgent-6591537 (PPO) 
+- Fully connect
+- Curiosity reward
+- Curriculum learning while training
 
 ## Description
 ### **# Problem**

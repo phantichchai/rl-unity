@@ -673,7 +673,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 50000
+  MaxStep: 10000
   destinationGameObject: {fileID: 585426922599898364}
   gameObjects:
   - {fileID: 585426922135679665}

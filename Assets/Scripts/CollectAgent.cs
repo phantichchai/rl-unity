@@ -78,11 +78,7 @@ public class CollectAgent : Agent
 
         if (StepCount == MaxStep)
         {
-            if (destinationGameObject.GetComponentsInChildren<Item>().Length == 3)
-            {
-                AddReward(+10f);
-            }
-            else if (destinationGameObject.GetComponentsInChildren<Item>().Length == 2)
+            if (destinationGameObject.GetComponentsInChildren<Item>().Length == 2)
             {
                 AddReward(+5f);
             }
@@ -180,6 +176,10 @@ public class CollectAgent : Agent
         {
             AddReward(-1f);
             EndEpisode();
+        }
+        if (other.CompareTag("item"))
+        {
+            AddReward(+1f);
         }
     }
 

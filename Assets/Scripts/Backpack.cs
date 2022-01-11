@@ -5,7 +5,7 @@ using UnityEngine;
 public class Backpack
 {
     private float backpackWeight = 0f;
-    private float maxBackpackWeight = 10f;
+    private float maxBackpackWeight = 15f;
     private List<Item> items = new List<Item>();
 
     public float BackpackWeight { get => backpackWeight; set => backpackWeight = value; }
