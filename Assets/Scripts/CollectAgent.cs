@@ -168,6 +168,10 @@ public class CollectAgent : Agent
             discreteActionsOut[0] = 2;
         }
         discreteActionsOut[3] = Input.GetKey(KeyCode.Space) ? 1 : 0;
+        if (Input.GetKey(KeyCode.F))
+        {
+            agentRB.AddForce(Vector3.forward, ForceMode.Acceleration);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
