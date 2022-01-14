@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AgentController : MonoBehaviour
 {
-    private float moveSpeed = 0.8f;
+    private float moveSpeed = 0.5f;
+    private float dashSpeed = 2.0f;
     private float rotateSpeed = 300f;
     private float jumpingTime;
     private float fallingForce = 50f;
@@ -26,6 +27,11 @@ public class AgentController : MonoBehaviour
     {
         AgentRigidbody = GetComponent<Rigidbody>();
         Backpack = new Backpack();
+    }
+
+    private void FixedUpdate()
+    {
+        MoveAgent();
     }
 
     public void MoveAgent()
@@ -58,6 +64,13 @@ public class AgentController : MonoBehaviour
             {
                 JumpingTime = 0.2f;
             }
+        }
+
+        // Dash
+        if (Input.GetKey(KeyCode.F))
+        {
+            direction = transform.forward;
+            AgentRigidbody.AddForce(direction * dashSpeed * CheckOnFieldType(), ForceMode.VelocityChange);
         }
 
         transform.Rotate(rotateDirection, Time.fixedDeltaTime * RotateSpeed);
