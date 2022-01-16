@@ -5,7 +5,8 @@ using UnityEngine;
 public class AgentController : MonoBehaviour
 {
     private float moveSpeed = 0.5f;
-    private float dashSpeed = 2.0f;
+    private float dashSpeed = 10.0f;
+    private float dashCooldown = 0.0f;
     private float rotateSpeed = 300f;
     private float jumpingTime;
     private float fallingForce = 50f;
@@ -27,6 +28,14 @@ public class AgentController : MonoBehaviour
     {
         AgentRigidbody = GetComponent<Rigidbody>();
         Backpack = new Backpack();
+    }
+
+    private void Update()
+    {
+        if (dashCooldown > 0f)
+        {
+            dashCooldown -= Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()
@@ -69,8 +78,12 @@ public class AgentController : MonoBehaviour
         // Dash
         if (Input.GetKey(KeyCode.F))
         {
-            direction = transform.forward;
-            AgentRigidbody.AddForce(direction * dashSpeed * CheckOnFieldType(), ForceMode.VelocityChange);
+            if (dashCooldown <= 0f)
+            {
+                direction = transform.forward;
+                AgentRigidbody.AddForce(direction * dashSpeed * CheckOnFieldType(), ForceMode.VelocityChange);
+                dashCooldown = 2.0f;
+            }
         }
 
         transform.Rotate(rotateDirection, Time.fixedDeltaTime * RotateSpeed);

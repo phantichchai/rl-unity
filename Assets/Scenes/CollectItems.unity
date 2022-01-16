@@ -318,6 +318,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 8.71
       objectReference: {fileID: 0}
+    - target: {fileID: 585426921991671603, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 585426921991671603, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 585426921991671603, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 585426921991671604, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -333,6 +345,10 @@ PrefabInstance:
     - target: {fileID: 585426921991671607, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
       value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 585426922220802223, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 585426922745267669, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
       propertyPath: m_IsActive
