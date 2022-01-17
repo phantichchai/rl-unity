@@ -16,6 +16,7 @@ TagManager:
   - ice
   - destination
   - item
+  - agent
   layers:
   - Default
   - TransparentFX

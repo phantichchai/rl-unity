@@ -7,6 +7,8 @@ public class AgentController : MonoBehaviour
     private float moveSpeed = 0.5f;
     private float dashSpeed = 10.0f;
     private float dashCooldown = 0.0f;
+    private bool isDash = false;
+    private float dashDuration = 0.0f;
     private float rotateSpeed = 300f;
     private float jumpingTime;
     private float fallingForce = 50f;
@@ -23,6 +25,9 @@ public class AgentController : MonoBehaviour
     public float MoveSpeed { get => moveSpeed; }
     public float RotateSpeed { get => rotateSpeed; }
     public Backpack Backpack { get => backpack; set => backpack = value; }
+    public bool IsDash { get => isDash; set => isDash = value; }
+    public float DashCooldown { get => dashCooldown; set => dashCooldown = value; }
+    public float DashDuration { get => dashDuration; set => dashDuration = value; }
 
     private void Start()
     {
@@ -32,9 +37,17 @@ public class AgentController : MonoBehaviour
 
     private void Update()
     {
-        if (dashCooldown > 0f)
+        if (DashCooldown > 0f)
         {
-            dashCooldown -= Time.deltaTime;
+            DashCooldown -= Time.deltaTime;
+        }
+        if (DashDuration > 0f)
+        {
+            DashDuration -= Time.deltaTime;
+        }
+        else
+        {
+            IsDash = false;
         }
     }
 
@@ -78,11 +91,13 @@ public class AgentController : MonoBehaviour
         // Dash
         if (Input.GetKey(KeyCode.F))
         {
-            if (dashCooldown <= 0f)
+            if (DashCooldown <= 0f)
             {
                 direction = transform.forward;
                 AgentRigidbody.AddForce(direction * dashSpeed * CheckOnFieldType(), ForceMode.VelocityChange);
-                dashCooldown = 2.0f;
+                DashCooldown = 2.0f;
+                DashDuration = 0.5f;
+                IsDash = true;
             }
         }
 
@@ -217,6 +232,18 @@ public class AgentController : MonoBehaviour
                     item.transform.SetParent(collision.transform);
                     item.transform.position = collision.transform.position + Vector3.up * (collision.transform.GetComponentsInChildren<Item>().Length + 0.5f);
                     item.GetComponent<SphereCollider>().isTrigger = false;
+                }
+            }
+        }
+
+
+        if (collision.collider.CompareTag("agent"))
+        {
+            if (collision.collider.TryGetComponent<AgentController>(out AgentController agent))
+            {
+                if (agent.IsDash)
+                {
+                    Debug.Log("Ouch!!");
                 }
             }
         }
