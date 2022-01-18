@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AgentController : MonoBehaviour
 {
+    [SerializeField]
+    private bool isPlay;
     private float moveSpeed = 0.5f;
     private float dashSpeed = 10.0f;
     private float dashCooldown = 0.0f;
@@ -53,7 +55,10 @@ public class AgentController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MoveAgent();
+        if (isPlay)
+        {
+            MoveAgent();
+        }
     }
 
     public void MoveAgent()
