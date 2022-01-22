@@ -14,6 +14,8 @@ public class AgentController : MonoBehaviour
     private float rotateSpeed = 300f;
     private float jumpingTime;
     private float fallingForce = 50f;
+    private float stunDuration = 0.0f;
+    private bool isStun = false;
     private Vector3 jumpTargetPosition;
     private Backpack backpack;
 
@@ -30,6 +32,8 @@ public class AgentController : MonoBehaviour
     public bool IsDash { get => isDash; set => isDash = value; }
     public float DashCooldown { get => dashCooldown; set => dashCooldown = value; }
     public float DashDuration { get => dashDuration; set => dashDuration = value; }
+    public float StunDuration { get => stunDuration; set => stunDuration = value; }
+    public bool IsStun { get => isStun; set => isStun = value; }
 
     private void Start()
     {
@@ -43,6 +47,7 @@ public class AgentController : MonoBehaviour
         {
             DashCooldown -= Time.deltaTime;
         }
+
         if (DashDuration > 0f)
         {
             DashDuration -= Time.deltaTime;
@@ -51,11 +56,20 @@ public class AgentController : MonoBehaviour
         {
             IsDash = false;
         }
+
+        if (StunDuration > 0f)
+        {
+            StunDuration -= Time.deltaTime;
+        }
+        else
+        {
+            IsStun = false;
+        }
     }
 
     private void FixedUpdate()
     {
-        if (isPlay)
+        if (isPlay && !IsStun)
         {
             MoveAgent();
         }
@@ -246,9 +260,34 @@ public class AgentController : MonoBehaviour
         {
             if (collision.collider.TryGetComponent<AgentController>(out AgentController agent))
             {
+                if (IsDash)
+                {
+                    Debug.Log("Stun!!");
+                    agent.StunDuration = 2.0f;
+                    agent.IsStun = true;
+
+                    if (agent.GetComponentInChildren<Item>() != null)
+                    {
+                        Item item = agent.GetComponentInChildren<Item>();
+                        item.transform.SetParent(null);
+                        agent.backpack.DropItem();
+                        item.transform.position = agent.transform.position + -1.5f * agent.transform.forward;
+                    }
+                }
+
                 if (agent.IsDash)
                 {
                     Debug.Log("Ouch!!");
+                    StunDuration = 2.0f;
+                    IsStun = true;
+
+                    if (GetComponentInChildren<Item>() != null)
+                    {
+                        Item item = GetComponentInChildren<Item>();
+                        item.transform.SetParent(null);
+                        backpack.DropItem();
+                        item.transform.position = transform.position + -1.5f * transform.forward;
+                    }
                 }
             }
         }
