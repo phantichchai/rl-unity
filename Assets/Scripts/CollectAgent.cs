@@ -96,7 +96,7 @@ public class CollectAgent : Agent
         int jumpAction = act[3];
 
         bool onGround = agentController.CheckOnGround();
-
+        Debug.Log(onGround);
         if (directionForwardAction == 1)
         {
             direction = (onGround ? 1f : 0.5f) * 1f * transform.forward;
@@ -168,10 +168,6 @@ public class CollectAgent : Agent
             discreteActionsOut[0] = 2;
         }
         discreteActionsOut[3] = Input.GetKey(KeyCode.Space) ? 1 : 0;
-        if (Input.GetKey(KeyCode.F))
-        {
-            
-        }
     }
 
     private void OnTriggerEnter(Collider other)

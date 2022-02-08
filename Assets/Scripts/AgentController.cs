@@ -34,6 +34,7 @@ public class AgentController : MonoBehaviour
     public float DashDuration { get => dashDuration; set => dashDuration = value; }
     public float StunDuration { get => stunDuration; set => stunDuration = value; }
     public bool IsStun { get => isStun; set => isStun = value; }
+    public float DashSpeed { get => dashSpeed; set => dashSpeed = value; }
 
     private void Start()
     {
@@ -113,7 +114,7 @@ public class AgentController : MonoBehaviour
             if (DashCooldown <= 0f)
             {
                 direction = transform.forward;
-                AgentRigidbody.AddForce(direction * dashSpeed * CheckOnFieldType(), ForceMode.VelocityChange);
+                AgentRigidbody.AddForce(direction * DashSpeed * CheckOnFieldType(), ForceMode.VelocityChange);
                 DashCooldown = 2.0f;
                 DashDuration = 0.5f;
                 IsDash = true;
