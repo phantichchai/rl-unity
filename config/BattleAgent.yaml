@@ -1,6 +1,6 @@
 behaviors:
   BattleCollectorAgent:
-    trainer_type: poca
+    trainer_type: ppo
     hyperparameters:
       batch_size: 256
       buffer_size: 4096
@@ -27,7 +27,7 @@ behaviors:
     keep_checkpoints: 5
     max_steps: 40000000
     time_horizon: 128
-    summary_freq: 20000
+    summary_freq: 50000
     self_play:
       save_steps: 50000
       team_change: 200000
@@ -63,7 +63,7 @@ behaviors:
     keep_checkpoints: 5
     max_steps: 40000000
     time_horizon: 128
-    summary_freq: 20000
+    summary_freq: 50000
     self_play:
       save_steps: 50000
       team_change: 200000
@@ -71,3 +71,31 @@ behaviors:
       window: 10
       play_against_latest_model_ratio: 0.5
       initial_elo: 1200.0
+
+environment_parameters:
+  collect_agent_environment:
+    curriculum:
+      - name: Lesson0
+        completion_criteria:
+          measure: reward
+          behavior: BattleCollectorAgent
+          signal_smoothing: true
+          min_lesson_length: 100
+          threshold: 0.8
+        value:
+          sampler_type: uniform
+          sampler_parameters:
+            min_value: 0.0
+            max_value: 1.0
+      - name: Lesson1
+        completion_criteria:
+          measure: reward
+          behavior: BattleCollectorAgent
+          signal_smoothing: true
+          min_lesson_length: 100
+          threshold: 8
+        value:
+          sampler_type: uniform
+          sampler_parameters:
+            min_value: 0.0
+            max_value: 1.0

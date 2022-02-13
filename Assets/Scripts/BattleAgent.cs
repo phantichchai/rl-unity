@@ -15,6 +15,8 @@ public class BattleAgent : Agent
     private Transform parentTransform;
     [SerializeField]
     private Transform[] itemsTransform;
+    [SerializeField]
+    private Position position;
 
     private List<Vector3> originPosition;
     private Vector3 agentStartPosition;
@@ -25,6 +27,12 @@ public class BattleAgent : Agent
     private Vector3 jumpTargetPosition;
 
     private Rigidbody agentRB;
+
+    public enum Position
+    {
+        Collector,
+        Disruptor,
+    }
 
     public override void Initialize()
     {
@@ -98,6 +106,18 @@ public class BattleAgent : Agent
     {
         ActionSegment<int> act = actions.DiscreteActions;
 
+        AddReward(-0.000001f);
+        if (StepCount == MaxStep)
+        {
+            if (position == Position.Collector)
+            {
+                AddReward(-10f);
+            }else if (position == Position.Disruptor)
+            {
+                AddReward(+10f);
+            }
+        }
+
         Vector3 direction = Vector3.zero;
         Vector3 rotateDirection = Vector3.zero;
         int directionForwardAction = act[0];
@@ -154,9 +174,12 @@ public class BattleAgent : Agent
             }
         }
 
-        transform.Rotate(rotateDirection, Time.fixedDeltaTime * agentController.RotateSpeed);
-        agentRB.AddForce(direction * agentController.MoveSpeed * agentController.CheckOnFieldType(), ForceMode.VelocityChange);
-
+        if (!agentController.IsStun)
+        {
+            transform.Rotate(rotateDirection, Time.fixedDeltaTime * agentController.RotateSpeed);
+            agentRB.AddForce(direction * agentController.MoveSpeed * agentController.CheckOnFieldType(), ForceMode.VelocityChange);
+        }
+        
         if (jumpingTime > 0f)
         {
             jumpTargetPosition = new Vector3(agentRB.position.x, agentRB.position.y + 1f, agentRB.position.z) + direction;
@@ -168,5 +191,37 @@ public class BattleAgent : Agent
             agentRB.AddForce(Vector3.down * fallingForce, ForceMode.Acceleration);
         }
         jumpingTime -= Time.fixedDeltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<Border>(out Border border))
+        {
+            AddReward(-1f);
+            EndEpisode();
+        }
+        if (other.CompareTag("item"))
+        {
+            AddReward(+1f);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("destination"))
+        {
+
+            if (destinationGameObject.GetComponentsInChildren<Item>().Length == 1)
+            {
+                if (position == Position.Collector)
+                {
+                    AddReward(+10f);
+                }else if (position == Position.Disruptor)
+                {
+                    AddReward(-10f);
+                }
+                EndEpisode();
+            }
+        }
     }
 }
