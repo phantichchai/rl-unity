@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Unity.MLAgents;
+
+
+public class BattleController : MonoBehaviour
+{
+    [SerializeField]
+    private GameObject area;
+    [SerializeField]
+    private GameObject destinationGameObject;
+    [HideInInspector, SerializeField]
+    public BattleEnvironmentController envController;
+    private string collectorTag = "collectorAgent";
+    private string disruptorTag = "disruptorAgent";
+
+    void Start()
+    {
+        envController = area.GetComponent<BattleEnvironmentController>();
+    }
+
+    private void FixedUpdate()
+    {
+        if (destinationGameObject.GetComponentsInChildren<Item>().Length == 1)
+        {
+            envController.DeliveryItem();
+        }
+        envController.HoldItem();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(collectorTag))
+        {
+            envController.GetItem(Position.Collector);
+        }
+        if (other.CompareTag(disruptorTag))
+        {
+            envController.GetItem(Position.Disruptor);
+        }
+    }
+}

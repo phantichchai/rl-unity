@@ -6,6 +6,8 @@ public class AgentController : MonoBehaviour
 {
     [SerializeField]
     private bool isPlay;
+    [SerializeField]
+    private Position position;
     private float moveSpeed = 0.5f;
     private float dashSpeed = 10.0f;
     private float dashCooldown = 0.0f;
@@ -242,7 +244,7 @@ public class AgentController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("destination"))
+        if (collision.collider.CompareTag("destination") && position == Position.Collector)
         {
             if (Backpack.CountItems() > 0)
             {
@@ -257,7 +259,7 @@ public class AgentController : MonoBehaviour
         }
 
 
-        if (collision.collider.CompareTag("agent"))
+        if (collision.collider.CompareTag("collectorAgent") || collision.collider.CompareTag("disruptorAgent"))
         {
             if (collision.collider.TryGetComponent<AgentController>(out AgentController agent))
             {

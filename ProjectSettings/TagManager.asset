@@ -17,6 +17,8 @@ TagManager:
   - destination
   - item
   - agent
+  - collectorAgent
+  - disruptorAgent
   layers:
   - Default
   - TransparentFX

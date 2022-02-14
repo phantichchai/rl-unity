@@ -726,7 +726,7 @@ Transform:
   m_GameObject: {fileID: 6936704364896954118}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.5, z: -10}
-  m_LocalScale: {x: 0.25000012, y: 1, z: 10}
+  m_LocalScale: {x: 0.25, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 6936704365790035952}
   m_RootOrder: 16
@@ -1646,7 +1646,7 @@ GameObject:
   - component: {fileID: 6936704365509597128}
   m_Layer: 0
   m_Name: CollectorAgent (1)
-  m_TagString: agent
+  m_TagString: collectorAgent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1764,6 +1764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlay: 0
+  position: 0
 --- !u!114 &6936704365509597122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1788,7 +1789,7 @@ MonoBehaviour:
   parentTransform: {fileID: 6936704365790035952}
   itemsTransform:
   - {fileID: 6936704366492180399}
-  position: 0
+  originPosition: []
 --- !u!114 &6936704365509597123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2319,6 +2320,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6936704365790035952}
+  - component: {fileID: 1380974638}
   m_Layer: 0
   m_Name: BattleEnvironment
   m_TagString: Untagged
@@ -2361,6 +2363,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1380974638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936704365790035953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b44d48f159557045a0534cc5fc08a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectorAgent: {fileID: 6936704365509597122}
+  disruptorAgent: {fileID: 6936704366120283794}
 --- !u!1 &6936704365804215186
 GameObject:
   m_ObjectHideFlags: 0
@@ -2816,7 +2832,7 @@ GameObject:
   - component: {fileID: 6936704366120283792}
   m_Layer: 0
   m_Name: DisruptorAgent (1)
-  m_TagString: agent
+  m_TagString: disruptorAgent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2934,6 +2950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlay: 0
+  position: 1
 --- !u!114 &6936704366120283794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2958,7 +2975,7 @@ MonoBehaviour:
   parentTransform: {fileID: 6936704365790035952}
   itemsTransform:
   - {fileID: 6936704366492180399}
-  position: 1
+  originPosition: []
 --- !u!114 &6936704366120283795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3369,6 +3386,7 @@ GameObject:
   - component: {fileID: 6936704366492180400}
   - component: {fileID: 6936704366492180401}
   - component: {fileID: 6936704366492180398}
+  - component: {fileID: 6602179437751369506}
   m_Layer: 0
   m_Name: Item (4)
   m_TagString: item
@@ -3466,6 +3484,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: normal
   weight: 5
+--- !u!114 &6602179437751369506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936704366492180396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2f029d3bc2db684f8261c49133fa08a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: {fileID: 6936704365790035953}
+  destinationGameObject: {fileID: 6936704365296545814}
+  envController: {fileID: 0}
 --- !u!1 &8244153417958992235
 GameObject:
   m_ObjectHideFlags: 0

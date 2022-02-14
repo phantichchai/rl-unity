@@ -5,6 +5,12 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
+public enum Position
+{
+    Collector,
+    Disruptor,
+}
+
 public class BattleAgent : Agent
 {
     [SerializeField]
@@ -16,7 +22,6 @@ public class BattleAgent : Agent
     [SerializeField]
     private Transform[] itemsTransform;
     [SerializeField]
-    private Position position;
 
     private List<Vector3> originPosition;
     private Vector3 agentStartPosition;
@@ -27,12 +32,6 @@ public class BattleAgent : Agent
     private Vector3 jumpTargetPosition;
 
     private Rigidbody agentRB;
-
-    public enum Position
-    {
-        Collector,
-        Disruptor,
-    }
 
     public override void Initialize()
     {
@@ -105,18 +104,6 @@ public class BattleAgent : Agent
     public override void OnActionReceived(ActionBuffers actions)
     {
         ActionSegment<int> act = actions.DiscreteActions;
-
-        AddReward(-0.000001f);
-        if (StepCount == MaxStep)
-        {
-            if (position == Position.Collector)
-            {
-                AddReward(-10f);
-            }else if (position == Position.Disruptor)
-            {
-                AddReward(+10f);
-            }
-        }
 
         Vector3 direction = Vector3.zero;
         Vector3 rotateDirection = Vector3.zero;
@@ -191,37 +178,5 @@ public class BattleAgent : Agent
             agentRB.AddForce(Vector3.down * fallingForce, ForceMode.Acceleration);
         }
         jumpingTime -= Time.fixedDeltaTime;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<Border>(out Border border))
-        {
-            AddReward(-1f);
-            EndEpisode();
-        }
-        if (other.CompareTag("item"))
-        {
-            AddReward(+1f);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("destination"))
-        {
-
-            if (destinationGameObject.GetComponentsInChildren<Item>().Length == 1)
-            {
-                if (position == Position.Collector)
-                {
-                    AddReward(+10f);
-                }else if (position == Position.Disruptor)
-                {
-                    AddReward(-10f);
-                }
-                EndEpisode();
-            }
-        }
     }
 }

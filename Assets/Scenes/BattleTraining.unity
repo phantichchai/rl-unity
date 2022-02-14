@@ -1457,6 +1457,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6936704365509597121, guid: b33daeaaaa868de418f5f3af1b1deeb6, type: 3}
+      propertyPath: m_TagString
+      value: collectorAgent
+      objectReference: {fileID: 0}
     - target: {fileID: 6936704365790035952, guid: b33daeaaaa868de418f5f3af1b1deeb6, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1504,6 +1508,10 @@ PrefabInstance:
     - target: {fileID: 6936704365790035953, guid: b33daeaaaa868de418f5f3af1b1deeb6, type: 3}
       propertyPath: m_Name
       value: BattleEnvironment
+      objectReference: {fileID: 0}
+    - target: {fileID: 6936704366120283787, guid: b33daeaaaa868de418f5f3af1b1deeb6, type: 3}
+      propertyPath: m_TagString
+      value: disruptorAgent
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b33daeaaaa868de418f5f3af1b1deeb6, type: 3}
