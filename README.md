@@ -64,3 +64,6 @@ CollectAgent.yaml :arrow_right: CollectAgent behavior
 - Items
 - Collector Agent
 - Disruptor Agent
+
+## Research
+[Battle Agent](https://github.com/phantichchai/rl-unity/blob/main/doc/BattleAgent.md)
