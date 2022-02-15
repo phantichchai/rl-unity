@@ -34,6 +34,6 @@ public class Backpack
 
     public int CountItems()
     {
-        return items.Count + 1;
+        return items.Count;
     }
 }

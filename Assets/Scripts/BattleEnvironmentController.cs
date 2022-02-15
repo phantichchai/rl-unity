@@ -44,8 +44,8 @@ public class BattleEnvironmentController : MonoBehaviour
     {
         if (disruptorAgent.GetComponent<AgentController>().Backpack.CountItems() > 0)
         {
-            disruptorGroup.AddGroupReward(0.01f);
-            collectorGroup.AddGroupReward(-0.01f);
+            disruptorGroup.AddGroupReward(0.001f);
+            collectorGroup.AddGroupReward(-0.001f);
         }
     }
 }

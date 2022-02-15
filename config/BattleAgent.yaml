@@ -1,6 +1,6 @@
 behaviors:
   BattleCollectorAgent:
-    trainer_type: ppo
+    trainer_type: poca
     hyperparameters:
       batch_size: 256
       buffer_size: 4096
@@ -15,15 +15,6 @@ behaviors:
       hidden_units: 256
       num_layers: 2
       vis_encode_type: simple
-    reward_signals:
-      extrinsic:
-        gamma: 0.99
-        strength: 1.0
-      curiosity:
-        strength: 0.02
-        gamma: 0.99
-        encoding_size: 256
-        learning_rate: 3.0e-4
     keep_checkpoints: 5
     max_steps: 40000000
     time_horizon: 128
@@ -36,7 +27,7 @@ behaviors:
       play_against_latest_model_ratio: 0.5
       initial_elo: 1200.0
   BattleDisruptorAgent:
-    trainer_type: ppo
+    trainer_type: poca
     hyperparameters:
       batch_size: 256
       buffer_size: 4096
@@ -51,15 +42,6 @@ behaviors:
       hidden_units: 256
       num_layers: 2
       vis_encode_type: simple
-    reward_signals:
-      extrinsic:
-        gamma: 0.99
-        strength: 1.0
-      curiosity:
-        strength: 0.02
-        gamma: 0.99
-        encoding_size: 256
-        learning_rate: 3.0e-4
     keep_checkpoints: 5
     max_steps: 40000000
     time_horizon: 128
@@ -71,31 +53,3 @@ behaviors:
       window: 10
       play_against_latest_model_ratio: 0.5
       initial_elo: 1200.0
-
-environment_parameters:
-  collect_agent_environment:
-    curriculum:
-      - name: Lesson0
-        completion_criteria:
-          measure: reward
-          behavior: BattleCollectorAgent
-          signal_smoothing: true
-          min_lesson_length: 100
-          threshold: 0.8
-        value:
-          sampler_type: uniform
-          sampler_parameters:
-            min_value: 0.0
-            max_value: 1.0
-      - name: Lesson1
-        completion_criteria:
-          measure: reward
-          behavior: BattleCollectorAgent
-          signal_smoothing: true
-          min_lesson_length: 100
-          threshold: 8
-        value:
-          sampler_type: uniform
-          sampler_parameters:
-            min_value: 0.0
-            max_value: 1.0

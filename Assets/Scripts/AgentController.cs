@@ -8,6 +8,8 @@ public class AgentController : MonoBehaviour
     private bool isPlay;
     [SerializeField]
     private Position position;
+    [SerializeField]
+    private Transform parentTranform;
     private float moveSpeed = 0.5f;
     private float dashSpeed = 10.0f;
     private float dashCooldown = 0.0f;
@@ -233,7 +235,7 @@ public class AgentController : MonoBehaviour
             if (!Backpack.isBackpackFull())
             {
                 other.transform.SetParent(transform);
-                other.transform.position = transform.position + Vector3.up * Backpack.CountItems();
+                other.transform.position = transform.position + Vector3.up * (Backpack.CountItems() + 1);
                 Backpack.CollectItem(item);
             }else{
                 other.isTrigger = false;
@@ -272,7 +274,7 @@ public class AgentController : MonoBehaviour
                     if (agent.GetComponentInChildren<Item>() != null)
                     {
                         Item item = agent.GetComponentInChildren<Item>();
-                        item.transform.SetParent(null);
+                        item.transform.SetParent(parentTranform);
                         agent.backpack.DropItem();
                         item.transform.position = agent.transform.position + -1.5f * agent.transform.forward;
                     }
@@ -287,7 +289,7 @@ public class AgentController : MonoBehaviour
                     if (GetComponentInChildren<Item>() != null)
                     {
                         Item item = GetComponentInChildren<Item>();
-                        item.transform.SetParent(null);
+                        item.transform.SetParent(parentTranform);
                         backpack.DropItem();
                         item.transform.position = transform.position + -1.5f * transform.forward;
                     }

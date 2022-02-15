@@ -103,6 +103,10 @@ public class BattleAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        if (agentController.IsStun)
+        {
+            return;
+        }
         ActionSegment<int> act = actions.DiscreteActions;
 
         Vector3 direction = Vector3.zero;
@@ -161,11 +165,8 @@ public class BattleAgent : Agent
             }
         }
 
-        if (!agentController.IsStun)
-        {
-            transform.Rotate(rotateDirection, Time.fixedDeltaTime * agentController.RotateSpeed);
-            agentRB.AddForce(direction * agentController.MoveSpeed * agentController.CheckOnFieldType(), ForceMode.VelocityChange);
-        }
+        transform.Rotate(rotateDirection, Time.fixedDeltaTime * agentController.RotateSpeed);
+        agentRB.AddForce(direction * agentController.MoveSpeed * agentController.CheckOnFieldType(), ForceMode.VelocityChange);
         
         if (jumpingTime > 0f)
         {

@@ -1765,6 +1765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlay: 0
   position: 0
+  parentTranform: {fileID: 6936704365790035952}
 --- !u!114 &6936704365509597122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2951,6 +2952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlay: 0
   position: 1
+  parentTranform: {fileID: 6936704365790035952}
 --- !u!114 &6936704366120283794
 MonoBehaviour:
   m_ObjectHideFlags: 0
