@@ -2,6 +2,8 @@
 
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/battle-agent-v1.png)
 
+[Link video](https://youtu.be/MvmCw2683hg): Battle Agent v1
+
 ## Neural Networks
 Algorithm (POCA) 
 - Fully connect
