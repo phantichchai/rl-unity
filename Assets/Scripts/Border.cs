@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class Border : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private GameObject area;
+    [HideInInspector, SerializeField]
+    public BattleEnvironmentController envController;
+    private string collectorTag = "collectorAgent";
+    private string disruptorTag = "disruptorAgent";
+
+    private void Start()
     {
-        
+        // envController = area.GetComponent<BattleEnvironmentController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        /*if (other.CompareTag(collectorTag))
+        {
+            envController.ColliderBorder(Position.Collector);
+        }
+        if (other.CompareTag(disruptorTag))
+        {
+            envController.ColliderBorder(Position.Disruptor);
+        }*/
     }
 }

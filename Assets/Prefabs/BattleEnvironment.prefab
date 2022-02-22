@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: EnemySensor
   m_DetectableTags:
-  - agent
+  - collectorAgent
   m_RaysPerDirection: 9
   m_MaxRayDegrees: 60
   m_SphereCastRadius: 0.5
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: EnemySensor
   m_DetectableTags:
-  - agent
+  - disruptorAgent
   m_RaysPerDirection: 9
   m_MaxRayDegrees: 60
   m_SphereCastRadius: 0.5
@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 6936704364501496891}
   - component: {fileID: 6936704364501496888}
   - component: {fileID: 6936704364501496889}
+  - component: {fileID: 1500091711}
   m_Layer: 0
   m_Name: Border (7)
   m_TagString: Untagged
@@ -536,6 +537,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1500091711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936704364501496887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d084bd98f7d57849b18fe2487b5ac0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: {fileID: 6936704365790035953}
+  envController: {fileID: 0}
 --- !u!1 &6936704364581378113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,6 +1806,7 @@ MonoBehaviour:
   itemsTransform:
   - {fileID: 6936704366492180399}
   originPosition: []
+  envController: {fileID: 216594315}
 --- !u!114 &6936704365509597123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2037,6 +2053,7 @@ GameObject:
   - component: {fileID: 6936704365620601767}
   - component: {fileID: 6936704365620601764}
   - component: {fileID: 6936704365620601765}
+  - component: {fileID: 1834753062}
   m_Layer: 0
   m_Name: Border (5)
   m_TagString: Untagged
@@ -2120,6 +2137,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1834753062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936704365620601763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d084bd98f7d57849b18fe2487b5ac0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: {fileID: 6936704365790035953}
+  envController: {fileID: 0}
 --- !u!1 &6936704365625960772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,7 +2352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6936704365790035952}
-  - component: {fileID: 1380974638}
+  - component: {fileID: 216594315}
   m_Layer: 0
   m_Name: BattleEnvironment
   m_TagString: Untagged
@@ -2364,7 +2395,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1380974638
+--- !u!114 &216594315
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2567,6 +2598,7 @@ GameObject:
   - component: {fileID: 6936704365926250328}
   - component: {fileID: 6936704365926250329}
   - component: {fileID: 6936704365926250326}
+  - component: {fileID: 1344744167}
   m_Layer: 0
   m_Name: Border (4)
   m_TagString: Untagged
@@ -2650,6 +2682,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1344744167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936704365926250324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d084bd98f7d57849b18fe2487b5ac0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: {fileID: 6936704365790035953}
+  envController: {fileID: 0}
 --- !u!1 &6936704365973735647
 GameObject:
   m_ObjectHideFlags: 0
@@ -2887,7 +2933,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2219d760c00e7514989d58fff99130ee, type: 2}
+  - {fileID: 2100000, guid: 17be54312b3c9cf4fbdc7e2ac2fcadff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2978,6 +3024,7 @@ MonoBehaviour:
   itemsTransform:
   - {fileID: 6936704366492180399}
   originPosition: []
+  envController: {fileID: 216594315}
 --- !u!114 &6936704366120283795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3115,6 +3162,7 @@ GameObject:
   - component: {fileID: 6936704366250575413}
   - component: {fileID: 6936704366250575410}
   - component: {fileID: 6936704366250575411}
+  - component: {fileID: 1739879368}
   m_Layer: 0
   m_Name: Border (6)
   m_TagString: Untagged
@@ -3198,6 +3246,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1739879368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936704366250575409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d084bd98f7d57849b18fe2487b5ac0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: {fileID: 6936704365790035953}
+  envController: {fileID: 0}
 --- !u!1 &6936704366369687888
 GameObject:
   m_ObjectHideFlags: 0
@@ -3388,7 +3450,7 @@ GameObject:
   - component: {fileID: 6936704366492180400}
   - component: {fileID: 6936704366492180401}
   - component: {fileID: 6936704366492180398}
-  - component: {fileID: 6602179437751369506}
+  - component: {fileID: 159305198}
   m_Layer: 0
   m_Name: Item (4)
   m_TagString: item
@@ -3486,7 +3548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: normal
   weight: 5
---- !u!114 &6602179437751369506
+--- !u!114 &159305198
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

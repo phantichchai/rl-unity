@@ -15,7 +15,7 @@ public class BattleController : MonoBehaviour
     private string collectorTag = "collectorAgent";
     private string disruptorTag = "disruptorAgent";
 
-    void Start()
+    private void Start()
     {
         envController = area.GetComponent<BattleEnvironmentController>();
     }

@@ -187,7 +187,6 @@ public class CollectAgent : Agent
     {
         if (collision.collider.CompareTag("destination"))
         {
-
             if (destinationGameObject.GetComponentsInChildren<Item>().Length == 3)
             {
                 AddReward(+10f);

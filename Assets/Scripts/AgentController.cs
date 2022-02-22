@@ -39,6 +39,7 @@ public class AgentController : MonoBehaviour
     public float StunDuration { get => stunDuration; set => stunDuration = value; }
     public bool IsStun { get => isStun; set => isStun = value; }
     public float DashSpeed { get => dashSpeed; set => dashSpeed = value; }
+    public Position Position { get => position; set => position = value; }
 
     private void Start()
     {
@@ -212,7 +213,9 @@ public class AgentController : MonoBehaviour
             || collider.CompareTag("pond")
             || collider.CompareTag("ice")
             || collider.CompareTag("desert")
-            || collider.CompareTag("destination"));
+            || collider.CompareTag("destination")
+            || collider.CompareTag("collectorAgent")
+            || collider.CompareTag("disruptorAgent"));
     }
 
     public bool CheckHitColliderCompareTag(RaycastHit hit)
@@ -224,7 +227,9 @@ public class AgentController : MonoBehaviour
             || hit.collider.CompareTag("pond")
             || hit.collider.CompareTag("ice")
             || hit.collider.CompareTag("desert")
-            || hit.collider.CompareTag("destination"));
+            || hit.collider.CompareTag("destination")
+            || hit.collider.CompareTag("collectorAgent")
+            || hit.collider.CompareTag("disruptorAgent"));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -246,7 +251,7 @@ public class AgentController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("destination") && position == Position.Collector)
+        if (collision.collider.CompareTag("destination") && Position == Position.Collector)
         {
             if (Backpack.CountItems() > 0)
             {
@@ -267,7 +272,7 @@ public class AgentController : MonoBehaviour
             {
                 if (IsDash)
                 {
-                    Debug.Log("Stun!!");
+                    Debug.Log(position + ": Stun!!");
                     agent.StunDuration = 2.0f;
                     agent.IsStun = true;
 
@@ -282,7 +287,7 @@ public class AgentController : MonoBehaviour
 
                 if (agent.IsDash)
                 {
-                    Debug.Log("Ouch!!");
+                    Debug.Log(position + ": Ouch!!");
                     StunDuration = 2.0f;
                     IsStun = true;
 

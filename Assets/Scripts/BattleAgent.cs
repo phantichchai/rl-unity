@@ -33,6 +33,8 @@ public class BattleAgent : Agent
 
     private Rigidbody agentRB;
 
+    public BattleEnvironmentController envController;
+
     public override void Initialize()
     {
         agentController = GetComponent<AgentController>();
@@ -107,6 +109,7 @@ public class BattleAgent : Agent
         {
             return;
         }
+
         ActionSegment<int> act = actions.DiscreteActions;
 
         Vector3 direction = Vector3.zero;
