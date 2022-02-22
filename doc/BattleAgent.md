@@ -2,6 +2,8 @@
 
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/battle-agent-v1.png)
 
+[Link video](https://youtu.be/OgKD2kQVILA): Battle Agent v2
+
 ## Neural Networks
 Algorithm (POCA) 
 - Fully connect
@@ -9,7 +11,8 @@ Algorithm (POCA)
 - Self-play
 
 ## Description
-- Fail for first training agent can't do anything.
+- Disruptor Agent can do task well
+- Collector Agent can't do task just random move
 
 ### **# Observation Input**
 For each agent:
