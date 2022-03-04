@@ -1,6 +1,6 @@
 # Battle Agent
 
-![](https://github.com/phantichchai/rl-unity/blob/main/Image/battle-agent-v1.png)
+![](https://github.com/phantichchai/rl-unity/blob/main/Image/battle-agent-v3.png)
 
 [Link video](https://youtu.be/saH_OosGbnU): Battle Agent v3
 
@@ -17,7 +17,8 @@ Algorithm (POCA)
 ### **# Observation Input**
 For each agent:
 - Raycast observation vector for return distance between agent and other object (2*20+1) * (4+1+1)
-- Raycast observation vector for Jump (2*1+1) * (3+1+1)
+- Raycast observation vector for jump (2*1+1) * (3+1+1)
+- Raycast observation vector for back (2*1+1) * (3+1+1)
 - Raycast observation vector for enemie (2*20+1) * (1+1+1)
 - Observation vector (17)
   + Float Dot product between vector velocity with forward axis
