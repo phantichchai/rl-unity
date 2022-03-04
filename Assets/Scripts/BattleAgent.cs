@@ -60,7 +60,7 @@ public class BattleAgent : Agent
             if (gameObjects[i].GetComponent<Item>() != null)
             {
                 gameObjects[i].transform.SetParent(parentTransform);
-                gameObjects[i].GetComponent<SphereCollider>().isTrigger = true;
+                gameObjects[i].GetComponent<SphereCollider>().isTrigger = false;
             }
         }
         agentRB.velocity = Vector3.zero;
@@ -70,9 +70,12 @@ public class BattleAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(agentController.CanJump());
+        sensor.AddObservation(agentController.DashCooldown);
+        sensor.AddObservation(agentController.IsStun);
         sensor.AddObservation(transform.localPosition);
         sensor.AddObservation(transform.localEulerAngles);
-        sensor.AddObservation(agentRB.velocity);
+        sensor.AddObservation(Vector3.Dot(agentRB.velocity, agentRB.transform.forward));
+        sensor.AddObservation(Vector3.Dot(agentRB.velocity, agentRB.transform.right));
         for (int i = 0; i < itemsTransform.Length; i++)
         {
             sensor.AddObservation(itemsTransform[i].localPosition);

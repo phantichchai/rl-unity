@@ -26,7 +26,7 @@ public class BattleController : MonoBehaviour
         {
             envController.DeliveryItem();
         }
-        envController.HoldItem();
+        envController.Stuning();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,6 +38,15 @@ public class BattleController : MonoBehaviour
         if (other.CompareTag(disruptorTag))
         {
             envController.GetItem(Position.Disruptor);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Collider other = collision.collider;
+        if (other.CompareTag(collectorTag))
+        {
+            envController.GetItem(Position.Collector);
         }
     }
 }

@@ -25,7 +25,7 @@ public class BattleEnvironmentController : MonoBehaviour
             collectorGroup.AddGroupReward(1f);
             disruptorGroup.AddGroupReward(-1f);
         }
-        else
+        else if (position == Position.Disruptor)
         {
             disruptorGroup.AddGroupReward(1f);
             collectorGroup.AddGroupReward(-1f);
@@ -35,15 +35,14 @@ public class BattleEnvironmentController : MonoBehaviour
     public void DeliveryItem()
     {
         collectorGroup.AddGroupReward(10f);
-        disruptorGroup.AddGroupReward(-10f);
+        disruptorGroup.AddGroupReward(-1f);
         collectorGroup.EndGroupEpisode();
         disruptorGroup.EndGroupEpisode();
     }
 
-    public void HoldItem()
+    public void Stuning()
     {
-        if (disruptorAgent.GetComponent<AgentController>().Backpack.CountItems() > 0)
-        {
+        if (collectorAgent.GetComponent<AgentController>().IsStun){
             disruptorGroup.AddGroupReward(0.001f);
             collectorGroup.AddGroupReward(-0.001f);
         }

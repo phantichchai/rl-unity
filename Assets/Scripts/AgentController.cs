@@ -232,26 +232,25 @@ public class AgentController : MonoBehaviour
             || hit.collider.CompareTag("disruptorAgent"));
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.TryGetComponent<Item>(out Item item))
+        if (collision.collider.TryGetComponent<Item>(out Item item1))
         {
-            other.isTrigger = true;
+            Collider other = collision.collider;
             if (!Backpack.isBackpackFull())
             {
                 other.transform.SetParent(transform);
                 other.transform.position = transform.position + Vector3.up * (Backpack.CountItems() + 1);
-                Backpack.CollectItem(item);
-            }else{
-                other.isTrigger = false;
+                Backpack.CollectItem(item1);
+                other.isTrigger = true;
+            }
+            else
+            {
                 Debug.Log("Can't get more");
             }
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("destination") && Position == Position.Collector)
+        if (collision.collider.CompareTag("destination") && position == Position.Collector)
         {
             if (Backpack.CountItems() > 0)
             {
@@ -264,7 +263,6 @@ public class AgentController : MonoBehaviour
                 }
             }
         }
-
 
         if (collision.collider.CompareTag("collectorAgent") || collision.collider.CompareTag("disruptorAgent"))
         {
@@ -283,7 +281,7 @@ public class AgentController : MonoBehaviour
                         agent.backpack.DropItem();
                         item.transform.position = agent.transform.position + -1.5f * agent.transform.forward;
                     }
-                }
+                }   
 
                 if (agent.IsDash)
                 {
