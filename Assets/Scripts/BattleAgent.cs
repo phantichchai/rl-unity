@@ -27,9 +27,6 @@ public class BattleAgent : Agent
     private Vector3 agentStartPosition;
 
     private AgentController agentController;
-    private float jumpingTime;
-    private float fallingForce;
-    private Vector3 jumpTargetPosition;
 
     private Rigidbody agentRB;
 
@@ -38,9 +35,7 @@ public class BattleAgent : Agent
     public override void Initialize()
     {
         agentController = GetComponent<AgentController>();
-        jumpingTime = agentController.JumpingTime;
         agentRB = GetComponent<Rigidbody>();
-        fallingForce = agentController.FallingForce;
         originPosition = new List<Vector3>();
         agentStartPosition = transform.localPosition;
         foreach (GameObject gameObject in gameObjects)
@@ -114,76 +109,6 @@ public class BattleAgent : Agent
         }
 
         ActionSegment<int> act = actions.DiscreteActions;
-
-        Vector3 direction = Vector3.zero;
-        Vector3 rotateDirection = Vector3.zero;
-        int directionForwardAction = act[0];
-        int rotateDirectionAction = act[1];
-        int directionSideAction = act[2];
-        int jumpAction = act[3];
-        int dashAction = act[4];
-
-        bool onGround = agentController.CheckOnGround();
-
-        if (directionForwardAction == 1)
-        {
-            direction = (onGround ? 1f : 0.5f) * 1f * transform.forward;
-        }
-        else if (directionForwardAction == 2)
-        {
-            direction = (onGround ? 1f : 0.5f) * -1f * transform.forward;
-        }
-        if (rotateDirectionAction == 1)
-        {
-            rotateDirection = transform.up * -1f;
-        }
-        else if (rotateDirectionAction == 2)
-        {
-            rotateDirection = transform.up * 1f;
-        }
-
-        if (directionSideAction == 1)
-        {
-            direction = -0.6f * transform.right;
-        }
-        else if (directionSideAction == 2)
-        {
-            direction = 0.6f * transform.right;
-        }
-
-        if (jumpAction == 1)
-        {
-            if ((jumpingTime <= 0f) && agentController.CanJump())
-            {
-                jumpingTime = 0.2f;
-            }
-        }
-
-        if (dashAction == 1)
-        {
-            if (agentController.DashCooldown <= 0f)
-            {
-                direction = transform.forward;
-                agentRB.AddForce(direction * agentController.DashSpeed * agentController.CheckOnFieldType(), ForceMode.VelocityChange);
-                agentController.DashCooldown = 2.0f;
-                agentController.DashDuration = 0.5f;
-                agentController.IsDash = true;
-            }
-        }
-
-        transform.Rotate(rotateDirection, Time.fixedDeltaTime * agentController.RotateSpeed);
-        agentRB.AddForce(direction * agentController.MoveSpeed * agentController.CheckOnFieldType(), ForceMode.VelocityChange);
-        
-        if (jumpingTime > 0f)
-        {
-            jumpTargetPosition = new Vector3(agentRB.position.x, agentRB.position.y + 1f, agentRB.position.z) + direction;
-            agentController.MoveTowards(jumpTargetPosition, agentRB, 300, 5);
-        }
-
-        if (!(jumpingTime > 0f) && !agentController.CheckOnGround())
-        {
-            agentRB.AddForce(Vector3.down * fallingForce, ForceMode.Acceleration);
-        }
-        jumpingTime -= Time.fixedDeltaTime;
+        agentController.MoveAgent(act);
     }
 }

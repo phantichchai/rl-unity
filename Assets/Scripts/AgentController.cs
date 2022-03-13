@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.MLAgents.Actuators;
+
 
 public class AgentController : MonoBehaviour
 {
@@ -77,35 +79,49 @@ public class AgentController : MonoBehaviour
     {
         if (isPlay && !IsStun)
         {
-            MoveAgent();
+            
         }
     }
 
-    public void MoveAgent()
+    public void MoveAgent(ActionSegment<int> act)
     {
         Vector3 direction = Vector3.zero;
         Vector3 rotateDirection = Vector3.zero;
+        int directionForwardAction = act[0];
+        int rotateDirectionAction = act[1];
+        int directionSideAction = act[2];
+        int jumpAction = act[3];
+        int dashAction = act[4];
 
         // Move forward / backward
-        if (Input.GetKey(KeyCode.W))
+        if (directionForwardAction == 1)
         {
             direction = (CheckOnGround() ? 1f : 0.5f) * 1f * transform.forward;
-        }else if (Input.GetKey(KeyCode.S)) 
+        }else if (directionForwardAction == 2) 
         {
             direction = (CheckOnGround() ? 1f : 0.5f) * -1f * transform.forward;
         }
 
+        if (rotateDirectionAction == 1)
+        {
+            rotateDirection = transform.up * -1f;
+        }
+        else if (rotateDirectionAction == 2)
+        {
+            rotateDirection = transform.up * 1f;
+        }
+
         // Rotate left / right
-        if (Input.GetKey(KeyCode.A))
+        if (directionSideAction == 1)
         {
-            rotateDirection = -0.6f * transform.up; 
-        }else if (Input.GetKey(KeyCode.D))
+            direction = -0.6f * transform.right; 
+        }else if (directionSideAction == 2)
         {
-            rotateDirection = 0.6f * transform.up;
+            direction = 0.6f * transform.right;
         }
 
         // Jumping
-        if (Input.GetKey(KeyCode.Space))
+        if (jumpAction == 1)
         {
             if ((JumpingTime <= 0f) && CanJump())
             {
@@ -114,7 +130,7 @@ public class AgentController : MonoBehaviour
         }
 
         // Dash
-        if (Input.GetKey(KeyCode.F))
+        if (dashAction == 1)
         {
             if (DashCooldown <= 0f)
             {
@@ -128,6 +144,7 @@ public class AgentController : MonoBehaviour
 
         transform.Rotate(rotateDirection, Time.fixedDeltaTime * RotateSpeed);
         AgentRigidbody.AddForce(direction * MoveSpeed * CheckOnFieldType(), ForceMode.VelocityChange);
+
         if (JumpingTime > 0f)
         {
             jumpTargetPosition = new Vector3(AgentRigidbody.position.x, AgentRigidbody.position.y + 1f, AgentRigidbody.position.z) + direction;
@@ -258,7 +275,7 @@ public class AgentController : MonoBehaviour
                 foreach (Item item in GetComponentsInChildren<Item>())
                 {
                     item.transform.SetParent(collision.transform);
-                    item.transform.position = collision.transform.position + Vector3.up * (collision.transform.GetComponentsInChildren<Item>().Length + 0.5f);
+                    item.transform.position = collision.transform.position + Vector3.up * (collision.transform.GetComponentsInChildren<Item>().Length + 0.525f);
                     item.GetComponent<SphereCollider>().isTrigger = false;
                 }
             }
@@ -280,6 +297,7 @@ public class AgentController : MonoBehaviour
                         item.transform.SetParent(parentTranform);
                         agent.backpack.DropItem();
                         item.transform.position = agent.transform.position + -1.5f * agent.transform.forward;
+                        item.GetComponent<SphereCollider>().isTrigger = false;
                     }
                 }   
 
@@ -295,6 +313,7 @@ public class AgentController : MonoBehaviour
                         item.transform.SetParent(parentTranform);
                         backpack.DropItem();
                         item.transform.position = transform.position + -1.5f * transform.forward;
+                        item.GetComponent<SphereCollider>().isTrigger = false;
                     }
                 }
             }
