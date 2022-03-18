@@ -1,10 +1,12 @@
 # Battle Agent
 
-![](https://github.com/phantichchai/rl-unity/blob/main/Image/battle-agent-v3.png)
+![](https://github.com/phantichchai/rl-unity/blob/main/Image/battle-agent-v4.png)
 
-[Link video](https://youtu.be/saH_OosGbnU): Battle Agent v3
+[Link video](https://youtu.be/ko6rA8ha7FA): Battle Agent v4
 
 ## Neural Networks
+[Policy Network](https://github.com/phantichchai/rl-unity/tree/main/Assets/Neural%20Networks/Backpack)
+
 Algorithm (POCA) 
 - Fully connect
 - Self-attention
@@ -20,15 +22,15 @@ For each agent:
 - Raycast observation vector for jump (2*1+1) * (3+1+1)
 - Raycast observation vector for back (2*1+1) * (3+1+1)
 - Raycast observation vector for enemie (2*20+1) * (1+1+1)
-- Observation vector (17)
+- Observation vector (15)
   + Float Dot product between vector velocity with forward axis
   + Float Dot product between vector velocity with right axis  
   + boolean agent can jump
   + boolean agent is stun
   + boolean agent dash cooldown
+  + int number of item in backpack
   + Vector3 agent position
   + Vector3 agent enler angles
-  + Vector3 item position
   + Vector3 destination position
 
 ### **# Action**
@@ -51,3 +53,18 @@ Discrete action (13)
   - Dash [one-hot vector size 2] (argmax in one-hot [action])
     - 0 [no action]
     - 1 [dash]
+
+### **# Reward**
+Collector Reward Personal
+  - GetItem +1
+  - EnemyGetItem +1
+  - DashOnHeldItem +0.001
+  - IsStun -0.001
+
+Disruptor Reward Personal
+  - GetItem +1
+  - EnemyGetItem -1
+  - StunEnemy +0.001
+
+GroupAgent
+  - DeliveryItem Collector Group +10 and Diruptor Group -1
