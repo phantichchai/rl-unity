@@ -1,10 +1,12 @@
 # Battle Agent
 
-![](https://github.com/phantichchai/rl-unity/blob/main/Image/battle-agent-v3.png)
+![](https://github.com/phantichchai/rl-unity/blob/main/Image/battle-agent-v4.png)
 
 [Link video](https://youtu.be/ko6rA8ha7FA): Battle Agent v4
 
 ## Neural Networks
+[Policy Network](https://github.com/phantichchai/rl-unity/tree/main/Assets/Neural%20Networks/Backpack)
+
 Algorithm (POCA) 
 - Fully connect
 - Self-attention
