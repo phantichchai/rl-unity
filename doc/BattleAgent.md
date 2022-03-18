@@ -20,12 +20,13 @@ For each agent:
 - Raycast observation vector for jump (2*1+1) * (3+1+1)
 - Raycast observation vector for back (2*1+1) * (3+1+1)
 - Raycast observation vector for enemie (2*20+1) * (1+1+1)
-- Observation vector (14)
+- Observation vector (15)
   + Float Dot product between vector velocity with forward axis
   + Float Dot product between vector velocity with right axis  
   + boolean agent can jump
   + boolean agent is stun
   + boolean agent dash cooldown
+  + int number of item in backpack
   + Vector3 agent position
   + Vector3 agent enler angles
   + Vector3 destination position
