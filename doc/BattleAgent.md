@@ -2,7 +2,7 @@
 
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/battle-agent-v3.png)
 
-[Link video](https://youtu.be/saH_OosGbnU): Battle Agent v3
+[Link video](https://youtu.be/ko6rA8ha7FA): Battle Agent v4
 
 ## Neural Networks
 Algorithm (POCA) 
