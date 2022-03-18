@@ -22,11 +22,11 @@ public class BattleAgent : Agent
     [SerializeField]
     private Transform[] itemsTransform;
     [SerializeField]
-
     private List<Vector3> originPosition;
     private Vector3 agentStartPosition;
 
     private AgentController agentController;
+    [SerializeField]
 
     private Rigidbody agentRB;
 
@@ -67,14 +67,11 @@ public class BattleAgent : Agent
         sensor.AddObservation(agentController.CanJump());
         sensor.AddObservation(agentController.DashCooldown);
         sensor.AddObservation(agentController.IsStun);
+        sensor.AddObservation(agentController.Backpack.CountItems());
         sensor.AddObservation(transform.localPosition);
         sensor.AddObservation(transform.localEulerAngles);
         sensor.AddObservation(Vector3.Dot(agentRB.velocity, agentRB.transform.forward));
         sensor.AddObservation(Vector3.Dot(agentRB.velocity, agentRB.transform.right));
-        for (int i = 0; i < itemsTransform.Length; i++)
-        {
-            sensor.AddObservation(itemsTransform[i].localPosition);
-        }
         sensor.AddObservation(destinationGameObject.transform.localPosition);
     }
 

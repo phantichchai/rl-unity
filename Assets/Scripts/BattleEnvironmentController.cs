@@ -22,13 +22,13 @@ public class BattleEnvironmentController : MonoBehaviour
     {
         if (position == Position.Collector)
         {
-            collectorGroup.AddGroupReward(1f);
-            disruptorGroup.AddGroupReward(-1f);
+            collectorAgent.AddReward(1f);
+            disruptorAgent.AddReward(-1f);
         }
         else if (position == Position.Disruptor)
         {
-            disruptorGroup.AddGroupReward(1f);
-            collectorGroup.AddGroupReward(-1f);
+            disruptorAgent.AddReward(1f);
+            collectorAgent.AddReward(-1f);
         }
     }
 
@@ -38,13 +38,23 @@ public class BattleEnvironmentController : MonoBehaviour
         disruptorGroup.AddGroupReward(-1f);
         collectorGroup.EndGroupEpisode();
         disruptorGroup.EndGroupEpisode();
+        collectorAgent.EndEpisode();
+        disruptorAgent.EndEpisode();
     }
 
     public void Stuning()
     {
         if (collectorAgent.GetComponent<AgentController>().IsStun){
-            disruptorGroup.AddGroupReward(0.001f);
-            collectorGroup.AddGroupReward(-0.001f);
+            collectorAgent.AddReward(-0.001f);
+            disruptorAgent.AddReward(0.001f);
+        }
+    }
+
+    public void DashOnHeldItem()
+    {
+        if (disruptorAgent.GetComponent<AgentController>().Backpack.CountItems() > 0)
+        {
+            collectorAgent.AddReward(0.001f);
         }
     }
 }

@@ -27,6 +27,7 @@ public class BattleController : MonoBehaviour
             envController.DeliveryItem();
         }
         envController.Stuning();
+        envController.DashOnHeldItem();
     }
 
     private void OnTriggerEnter(Collider other)

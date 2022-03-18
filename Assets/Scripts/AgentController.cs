@@ -12,6 +12,8 @@ public class AgentController : MonoBehaviour
     private Position position;
     [SerializeField]
     private Transform parentTranform;
+    [SerializeField]
+    private ParticleSystem StunedEffect;
     private float moveSpeed = 0.5f;
     private float dashSpeed = 10.0f;
     private float dashCooldown = 0.0f;
@@ -39,7 +41,20 @@ public class AgentController : MonoBehaviour
     public float DashCooldown { get => dashCooldown; set => dashCooldown = value; }
     public float DashDuration { get => dashDuration; set => dashDuration = value; }
     public float StunDuration { get => stunDuration; set => stunDuration = value; }
-    public bool IsStun { get => isStun; set => isStun = value; }
+    public bool IsStun { 
+        get => isStun;
+        set {
+            if (value)
+            {
+                StunedEffect.Play();
+            }
+            else
+            {
+                StunedEffect.Stop();
+            }
+            isStun = value; 
+        }
+    }
     public float DashSpeed { get => dashSpeed; set => dashSpeed = value; }
     public Position Position { get => position; set => position = value; }
 
@@ -77,10 +92,7 @@ public class AgentController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isPlay && !IsStun)
-        {
-            
-        }
+        
     }
 
     public void MoveAgent(ActionSegment<int> act)
