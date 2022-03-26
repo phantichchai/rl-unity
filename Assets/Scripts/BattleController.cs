@@ -10,44 +10,22 @@ public class BattleController : MonoBehaviour
     private GameObject area;
     [SerializeField]
     private GameObject destinationGameObject;
+    [SerializeField]
+    private List<Item> items;
     [HideInInspector, SerializeField]
-    public BattleEnvironmentController envController;
-    private string collectorTag = "collectorAgent";
-    private string disruptorTag = "disruptorAgent";
+    public EnvironmentController envController;
 
     private void Start()
     {
-        envController = area.GetComponent<BattleEnvironmentController>();
+        envController = area.GetComponent<EnvironmentController>();
     }
 
     private void FixedUpdate()
     {
-        if (destinationGameObject.GetComponentsInChildren<Item>().Length == 1)
+        if (destinationGameObject.GetComponentsInChildren<Item>().Length == items.Count)
         {
             envController.DeliveryItem();
         }
         envController.Stuning();
-        envController.DashOnHeldItem();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(collectorTag))
-        {
-            envController.GetItem(Position.Collector);
-        }
-        if (other.CompareTag(disruptorTag))
-        {
-            envController.GetItem(Position.Disruptor);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Collider other = collision.collider;
-        if (other.CompareTag(collectorTag))
-        {
-            envController.GetItem(Position.Collector);
-        }
     }
 }

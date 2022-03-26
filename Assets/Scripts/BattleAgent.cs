@@ -20,14 +20,10 @@ public class BattleAgent : Agent
     [SerializeField]
     private Transform parentTransform;
     [SerializeField]
-    private Transform[] itemsTransform;
-    [SerializeField]
     private List<Vector3> originPosition;
     private Vector3 agentStartPosition;
 
     private AgentController agentController;
-    [SerializeField]
-
     private Rigidbody agentRB;
 
     public BattleEnvironmentController envController;
@@ -56,6 +52,7 @@ public class BattleAgent : Agent
             {
                 gameObjects[i].transform.SetParent(parentTransform);
                 gameObjects[i].GetComponent<SphereCollider>().isTrigger = false;
+                gameObjects[i].GetComponent<SphereCollider>().enabled = true;
             }
         }
         agentRB.velocity = Vector3.zero;

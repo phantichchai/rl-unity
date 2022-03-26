@@ -21344,8 +21344,6 @@ MonoBehaviour:
   - {fileID: 6936704365599577545}
   - {fileID: 6936704366492180396}
   parentTransform: {fileID: 6936704365790035952}
-  itemsTransform:
-  - {fileID: 6936704366492180399}
   originPosition: []
   agentRB: {fileID: 0}
   envController: {fileID: 216594315}
@@ -21893,6 +21891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6936704365790035952}
   - component: {fileID: 216594315}
+  - component: {fileID: 1627589832}
   m_Layer: 0
   m_Name: BattleEnvironment
   m_TagString: Untagged
@@ -21949,6 +21948,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectorAgent: {fileID: 6936704365509597122}
   disruptorAgent: {fileID: 6936704366120283794}
+--- !u!114 &1627589832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936704365790035953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2f029d3bc2db684f8261c49133fa08a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: {fileID: 6936704365790035953}
+  destinationGameObject: {fileID: 6936704365296545814}
+  items:
+  - {fileID: 6936704366492180398}
+  envController: {fileID: 0}
 --- !u!1 &6936704365804215186
 GameObject:
   m_ObjectHideFlags: 0
@@ -22563,8 +22579,6 @@ MonoBehaviour:
   - {fileID: 6936704365599577545}
   - {fileID: 6936704366492180396}
   parentTransform: {fileID: 6936704365790035952}
-  itemsTransform:
-  - {fileID: 6936704366492180399}
   originPosition: []
   agentRB: {fileID: 0}
   envController: {fileID: 216594315}
@@ -22991,7 +23005,6 @@ GameObject:
   - component: {fileID: 6936704366492180400}
   - component: {fileID: 6936704366492180401}
   - component: {fileID: 6936704366492180398}
-  - component: {fileID: 159305198}
   m_Layer: 0
   m_Name: Item (4)
   m_TagString: item
@@ -23089,21 +23102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: normal
   weight: 5
---- !u!114 &159305198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6936704366492180396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2f029d3bc2db684f8261c49133fa08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  area: {fileID: 6936704365790035953}
-  destinationGameObject: {fileID: 6936704365296545814}
-  envController: {fileID: 0}
+  envController: {fileID: 216594315}
 --- !u!1 &7045921367163168591
 GameObject:
   m_ObjectHideFlags: 0

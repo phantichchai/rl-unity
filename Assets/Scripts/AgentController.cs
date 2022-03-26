@@ -90,11 +90,6 @@ public class AgentController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
     public void MoveAgent(ActionSegment<int> act)
     {
         Vector3 direction = Vector3.zero;
@@ -288,7 +283,8 @@ public class AgentController : MonoBehaviour
                 {
                     item.transform.SetParent(collision.transform);
                     item.transform.position = collision.transform.position + Vector3.up * (collision.transform.GetComponentsInChildren<Item>().Length + 0.525f);
-                    item.GetComponent<SphereCollider>().isTrigger = false;
+                    item.GetComponent<SphereCollider>().isTrigger = true;
+                    item.GetComponent<SphereCollider>().enabled = false;
                 }
             }
         }
@@ -297,35 +293,38 @@ public class AgentController : MonoBehaviour
         {
             if (collision.collider.TryGetComponent<AgentController>(out AgentController agent))
             {
-                if (IsDash)
+                if (agent.position != position)
                 {
-                    Debug.Log(position + ": Stun!!");
-                    agent.StunDuration = 2.0f;
-                    agent.IsStun = true;
-
-                    if (agent.GetComponentInChildren<Item>() != null)
+                    if (IsDash)
                     {
-                        Item item = agent.GetComponentInChildren<Item>();
-                        item.transform.SetParent(parentTranform);
-                        agent.backpack.DropItem();
-                        item.transform.position = agent.transform.position + -1.5f * agent.transform.forward;
-                        item.GetComponent<SphereCollider>().isTrigger = false;
+                        Debug.Log(position + ": Stun!!");
+                        agent.StunDuration = 2.0f;
+                        agent.IsStun = true;
+
+                        if (agent.GetComponentInChildren<Item>() != null)
+                        {
+                            Item item = agent.GetComponentInChildren<Item>();
+                            item.transform.SetParent(parentTranform);
+                            agent.backpack.DropItem();
+                            item.transform.position = agent.transform.position + -1.5f * agent.transform.forward;
+                            item.GetComponent<SphereCollider>().isTrigger = false;
+                        }
                     }
-                }   
 
-                if (agent.IsDash)
-                {
-                    Debug.Log(position + ": Ouch!!");
-                    StunDuration = 2.0f;
-                    IsStun = true;
-
-                    if (GetComponentInChildren<Item>() != null)
+                    if (agent.IsDash)
                     {
-                        Item item = GetComponentInChildren<Item>();
-                        item.transform.SetParent(parentTranform);
-                        backpack.DropItem();
-                        item.transform.position = transform.position + -1.5f * transform.forward;
-                        item.GetComponent<SphereCollider>().isTrigger = false;
+                        Debug.Log(position + ": Ouch!!");
+                        StunDuration = 2.0f;
+                        IsStun = true;
+
+                        if (GetComponentInChildren<Item>() != null)
+                        {
+                            Item item = GetComponentInChildren<Item>();
+                            item.transform.SetParent(parentTranform);
+                            backpack.DropItem();
+                            item.transform.position = transform.position + -1.5f * transform.forward;
+                            item.GetComponent<SphereCollider>().isTrigger = false;
+                        }
                     }
                 }
             }
