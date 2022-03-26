@@ -2,7 +2,7 @@
 
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.4.png)
 
-link video agent v0.1.4 https://youtu.be/eSUhizSMniU
+link video agent v0.1.5 https://youtu.be/2VNZBbtnHtU
 
 ## Neural Networks
 [Collect(Collector/Disruptor)Agent-24020000](https://github.com/phantichchai/rl-unity/blob/main/config/CollectAgent.yaml) (PPO) 
@@ -14,8 +14,9 @@ link video agent v0.1.4 https://youtu.be/eSUhizSMniU
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/polict-network.png)
 
 ## Description
-- Agent can solve the problem by full connect neural network with curiosity reward and curriculum learning.
-- Agent can collect all 3 items for delivery to destination.
+- Disruptor Agent can't do task as well. 
+- Collect Agent can collect all 3 items but can't delivery item.
+- Swap step is too small cause updating each training round is not good enough.
 
 ### **# Observation Input**
 - Raycast observation vector for return distance between agent and other object (174)  
