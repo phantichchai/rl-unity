@@ -2,10 +2,10 @@
 
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/v0.1.4.png)
 
-link video agent v0.1.5 https://youtu.be/2VNZBbtnHtU
+link video agent v0.1.6 https://youtu.be/iZ8-EkJvXng
 
 ## Neural Networks
-[Collect(Collector/Disruptor)Agent-24020000](https://github.com/phantichchai/rl-unity/blob/main/config/CollectAgent.yaml) (PPO) 
+[Collect(Collector/Disruptor)Agent](https://github.com/phantichchai/rl-unity/blob/main/config/CollectAgent.yaml) (PPO) 
 - Fully connect
 - Multihead attention
 - Curiosity reward
