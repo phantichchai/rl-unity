@@ -4039,7 +4039,7 @@ GameObject:
   m_Component:
   - component: {fileID: 585426923716786756}
   - component: {fileID: 1521542960272942374}
-  - component: {fileID: 1965397510}
+  - component: {fileID: 5700623276174011915}
   m_Layer: 0
   m_Name: CollectFixEnvironment
   m_TagString: Untagged
@@ -4117,7 +4117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectorAgent: {fileID: 8905513699575832043}
   disruptorAgent: {fileID: 1097626401651138964}
---- !u!114 &1965397510
+--- !u!114 &5700623276174011915
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4126,7 +4126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 585426923716786757}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2f029d3bc2db684f8261c49133fa08a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5518c12bd06bf0047a90f054afa92ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   area: {fileID: 585426923716786757}
@@ -4397,7 +4397,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 35640d34ed4ac1c46a0b5ee4c6fb4e90, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: ed99bd2a2657d3b49895004e83b6369d, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: CollectCollectorAgent
@@ -20162,11 +20162,11 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 73142304ec6941843ab7d29371c30184, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 2462b6fdfaf268540b4c195651553db4, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: CollectDisruptorAgent
-  TeamId: 0
+  TeamId: 1
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0

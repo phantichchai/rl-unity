@@ -305,7 +305,7 @@ public class AgentController : MonoBehaviour
                         {
                             Item item = agent.GetComponentInChildren<Item>();
                             item.transform.SetParent(parentTranform);
-                            agent.backpack.DropItem();
+                            // agent.backpack.DropItem();
                             item.transform.position = agent.transform.position + -1.5f * agent.transform.forward;
                             item.GetComponent<SphereCollider>().isTrigger = false;
                         }
@@ -321,7 +321,7 @@ public class AgentController : MonoBehaviour
                         {
                             Item item = GetComponentInChildren<Item>();
                             item.transform.SetParent(parentTranform);
-                            backpack.DropItem();
+                            // backpack.DropItem();
                             item.transform.position = transform.position + -1.5f * transform.forward;
                             item.GetComponent<SphereCollider>().isTrigger = false;
                         }

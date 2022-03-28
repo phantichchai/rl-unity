@@ -18,12 +18,12 @@ public class CollectEnvironmentController : EnvironmentController
         if (position == Position.Collector)
         {
             collectorAgent.AddReward(1f);
-            disruptorAgent.AddReward(-1f);
+            disruptorAgent.AddReward(-0.001f);
         }
         else if (position == Position.Disruptor)
         {
-            collectorAgent.AddReward(-1f);
-            disruptorAgent.AddReward(1f);
+            collectorAgent.AddReward(-0.001f);
+            disruptorAgent.AddReward(0.1f);
         }
     }
 
@@ -39,16 +39,40 @@ public class CollectEnvironmentController : EnvironmentController
     {
         if (collectorAgent.GetComponent<AgentController>().IsStun)
         {
-            disruptorAgent.AddReward(0.001f);
-            collectorAgent.AddReward(-0.001f);
+            disruptorAgent.AddReward(0.01f);
         }
     }
 
-    public override void DashOnHeldItem()
+    public void DashOnDisruptorAgent()
     {
-        if (disruptorAgent.GetComponent<AgentController>().Backpack.CountItems() > 0)
+        AgentController diruptorController = disruptorAgent.GetComponent<AgentController>();
+        int numberOfItems = diruptorController.Backpack.CountItems();
+        if (numberOfItems > 0)
         {
-            collectorAgent.AddReward(0.001f);
+            collectorAgent.AddReward(0.001f * numberOfItems);
+            disruptorAgent.AddReward(-1f * numberOfItems);
+        }
+        diruptorController.Backpack.DropItem();
+    }
+
+    public void DashOnCollectorAgent()
+    {
+        AgentController collectorController = collectorAgent.GetComponent<AgentController>();
+        int numberOfItems = collectorController.Backpack.CountItems();
+        if (numberOfItems > 0)
+        {
+            disruptorAgent.AddReward(0.001f * numberOfItems);
+            collectorAgent.AddReward(-1f * numberOfItems);
+        }
+        collectorController.Backpack.DropItem();
+    }
+
+    public override void NumberOfItemsAtDestination(int number)
+    {
+        if (collectorAgent.StepCount == collectorAgent.MaxStep)
+        {
+            collectorAgent.AddReward(number * 3f);
         }
     }
+
 }

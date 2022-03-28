@@ -50,11 +50,16 @@ public class BattleEnvironmentController : EnvironmentController
         }
     }
 
-    public override void DashOnHeldItem()
+    public void DashOnDisruptorAgent()
     {
         if (disruptorAgent.GetComponent<AgentController>().Backpack.CountItems() > 0)
         {
             collectorAgent.AddReward(0.001f);
         }
+    }
+
+    public override void NumberOfItemsAtDestination(int number)
+    {
+        throw new System.NotImplementedException();
     }
 }

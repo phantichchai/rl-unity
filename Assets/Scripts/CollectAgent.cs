@@ -124,7 +124,18 @@ public class CollectAgent : Agent
             {
                 if (collision.collider.CompareTag(Item.disruptorTag))
                 {
-                    collectEnvironment.DashOnHeldItem();
+                    collectEnvironment.DashOnDisruptorAgent();
+                }
+            }
+        }
+
+        if (agentController.Position == Position.Disruptor)
+        {
+            if (agentController.IsDash)
+            {
+                if (collision.collider.CompareTag(Item.collectorTag))
+                {
+                    collectEnvironment.DashOnCollectorAgent();
                 }
             }
         }

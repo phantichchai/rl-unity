@@ -9,5 +9,5 @@ public abstract class EnvironmentController : MonoBehaviour
     public abstract void DeliveryItem();
     public abstract void Stuning();
 
-    public abstract void DashOnHeldItem();
+    public abstract void NumberOfItemsAtDestination(int number);
 }
