@@ -354,5 +354,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: CollectFixEnvironment (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 1882924882202349415, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127715537272397414, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982609074487315856, guid: ca97b2e83292b7543ad265de15983e08, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 2d8a6a98180a7d9489e428a9c253f603, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca97b2e83292b7543ad265de15983e08, type: 3}

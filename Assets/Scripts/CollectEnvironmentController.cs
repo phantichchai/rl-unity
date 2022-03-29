@@ -10,7 +10,8 @@ public class CollectEnvironmentController : EnvironmentController
 
     private void Update()
     {
-        // Debug.Log(collectorAgent.GetCumulativeReward());
+        // Debug.Log("Collector Agent Rewards: " + collectorAgent.GetCumulativeReward());
+        // Debug.Log("Disruptor Agent Rewards: " + disruptorAgent.GetCumulativeReward());
     }
 
     public override void GetItem(Position position)
@@ -39,7 +40,7 @@ public class CollectEnvironmentController : EnvironmentController
     {
         if (collectorAgent.GetComponent<AgentController>().IsStun)
         {
-            disruptorAgent.AddReward(0.01f);
+           disruptorAgent.AddReward(0.01f);
         }
     }
 
@@ -49,8 +50,8 @@ public class CollectEnvironmentController : EnvironmentController
         int numberOfItems = diruptorController.Backpack.CountItems();
         if (numberOfItems > 0)
         {
-            collectorAgent.AddReward(0.001f * numberOfItems);
-            disruptorAgent.AddReward(-1f * numberOfItems);
+           collectorAgent.AddReward(0.001f * numberOfItems);
+           disruptorAgent.AddReward(-1f * numberOfItems);
         }
         diruptorController.Backpack.DropItem();
     }
@@ -61,7 +62,7 @@ public class CollectEnvironmentController : EnvironmentController
         int numberOfItems = collectorController.Backpack.CountItems();
         if (numberOfItems > 0)
         {
-            disruptorAgent.AddReward(0.001f * numberOfItems);
+            //disruptorAgent.AddReward(0.001f * numberOfItems);
             collectorAgent.AddReward(-1f * numberOfItems);
         }
         collectorController.Backpack.DropItem();
@@ -72,6 +73,22 @@ public class CollectEnvironmentController : EnvironmentController
         if (collectorAgent.StepCount == collectorAgent.MaxStep)
         {
             collectorAgent.AddReward(number * 3f);
+        }
+    }
+
+    public void GetTouchBorder(Position position)
+    {
+        if (position == Position.Collector)
+        {
+            collectorAgent.AddReward(-1f);
+            collectorAgent.EndEpisode();
+            disruptorAgent.EndEpisode();
+        }
+        if (position == Position.Disruptor)
+        {
+            disruptorAgent.AddReward(-1f);
+            collectorAgent.EndEpisode();
+            disruptorAgent.EndEpisode();
         }
     }
 

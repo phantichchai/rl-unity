@@ -27,6 +27,5 @@ public class CollectController : MonoBehaviour
             envController.DeliveryItem();
         }
         envController.Stuning();
-        envController.NumberOfItemsAtDestination(count);
     }
 }

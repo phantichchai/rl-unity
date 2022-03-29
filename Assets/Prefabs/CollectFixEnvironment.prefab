@@ -553,6 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d084bd98f7d57849b18fe2487b5ac0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  environmentController: {fileID: 1521542960272942374}
 --- !u!1 &585426922009504271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,6 +1841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d084bd98f7d57849b18fe2487b5ac0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  environmentController: {fileID: 1521542960272942374}
 --- !u!1 &585426922744596846
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,6 +3318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d084bd98f7d57849b18fe2487b5ac0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  environmentController: {fileID: 1521542960272942374}
 --- !u!1 &585426923384161162
 GameObject:
   m_ObjectHideFlags: 0
@@ -3535,6 +3538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d084bd98f7d57849b18fe2487b5ac0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  environmentController: {fileID: 1521542960272942374}
 --- !u!1 &585426923421130213
 GameObject:
   m_ObjectHideFlags: 0
@@ -4397,7 +4401,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: ed99bd2a2657d3b49895004e83b6369d, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: CollectCollectorAgent
@@ -20021,7 +20025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1174879962704274793
 Transform:
   m_ObjectHideFlags: 0
@@ -20162,7 +20166,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 2462b6fdfaf268540b4c195651553db4, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: de173c42f4e4e8540a1b078fac5ceb58, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: CollectDisruptorAgent
