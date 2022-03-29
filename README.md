@@ -15,9 +15,8 @@ link video agent v0.1.7 https://youtu.be/ixbSxOwg2uw
 ![](https://github.com/phantichchai/rl-unity/blob/main/Image/polict-network.png)
 
 ## Description
-- Disruptor Agent can't do task as well. 
-- Collect Agent can collect all 3 items but can't delivery item.
-- Swap step is too small cause updating each training round is not good enough.
+- Disruptor Agent can do task as well chasing collect agent. 
+- Collect Agent can collect all 3 items and delivery item.
 
 ### **# Observation Input**
 - Raycast observation vector for return distance between agent and other object (174)  
