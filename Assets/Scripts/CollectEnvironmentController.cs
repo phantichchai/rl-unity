@@ -14,6 +14,20 @@ public class CollectEnvironmentController : EnvironmentController
         // Debug.Log("Disruptor Agent Rewards: " + disruptorAgent.GetCumulativeReward());
     }
 
+    private void Start()
+    {
+        if (DataSystem.Instance().Mode == Mode.Collector)
+        {
+            collectorAgent.GetComponent<AgentController>().IsPlay = true;
+            collectorAgent.transform.Find("AgentCamera").gameObject.SetActive(true);
+        }
+        else if (DataSystem.Instance().Mode == Mode.Disruptor)
+        {
+            disruptorAgent.GetComponent<AgentController>().IsPlay = true;
+           disruptorAgent.transform.Find("AgentCamera").gameObject.SetActive(true);
+        }
+    }
+
     public override void GetItem(Position position)
     {
         if (position == Position.Collector)
@@ -62,7 +76,7 @@ public class CollectEnvironmentController : EnvironmentController
         int numberOfItems = collectorController.Backpack.CountItems();
         if (numberOfItems > 0)
         {
-            //disruptorAgent.AddReward(0.001f * numberOfItems);
+            disruptorAgent.AddReward(0.001f * numberOfItems);
             collectorAgent.AddReward(-1f * numberOfItems);
         }
         collectorController.Backpack.DropItem();
@@ -76,7 +90,7 @@ public class CollectEnvironmentController : EnvironmentController
         }
     }
 
-    public void GetTouchBorder(Position position)
+    public override void GetTouchBorder(Position position)
     {
         if (position == Position.Collector)
         {

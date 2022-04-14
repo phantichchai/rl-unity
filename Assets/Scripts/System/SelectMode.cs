@@ -12,15 +12,30 @@ public class SelectMode : MonoBehaviour
 
     public void AgentOnlyButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        DataSystem.Instance().Mode = Mode.AgentOnly;
+        NextScene();
     }
 
     public void CollectorTeamButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+        DataSystem.Instance().Mode = Mode.Collector;
+        NextScene();
     }
     public void DisruptorTeamButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+        DataSystem.Instance().Mode = Mode.Disruptor;
+        NextScene();
+    }
+
+    public void NextScene()
+    {
+        if (DataSystem.Instance().State == State.Battle)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else if (DataSystem.Instance().State == State.CollectItem)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+        }
     }
 }

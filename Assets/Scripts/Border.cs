@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Border : MonoBehaviour
 {
-    public CollectEnvironmentController environmentController;
+    public EnvironmentController environmentController;
 
     private void OnCollisionEnter(Collision collision)
     {

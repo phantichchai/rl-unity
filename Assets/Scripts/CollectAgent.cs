@@ -113,7 +113,10 @@ public class CollectAgent : Agent
         }
 
         ActionSegment<int> act = actions.DiscreteActions;
-        agentController.MoveAgent(act);
+        if (!agentController.IsPlay)
+        {
+            agentController.MoveAgent(act);
+        }
     }
 
     public void OnCollisionEnter(Collision collision)

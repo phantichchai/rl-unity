@@ -10,4 +10,6 @@ public abstract class EnvironmentController : MonoBehaviour
     public abstract void Stuning();
 
     public abstract void NumberOfItemsAtDestination(int number);
+
+    public abstract void GetTouchBorder(Position position);
 }

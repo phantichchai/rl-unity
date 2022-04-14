@@ -57,6 +57,7 @@ public class AgentController : MonoBehaviour
     }
     public float DashSpeed { get => dashSpeed; set => dashSpeed = value; }
     public Position Position { get => position; set => position = value; }
+    public bool IsPlay { get => isPlay; set => isPlay = value; }
 
     private void Start()
     {
@@ -87,6 +88,14 @@ public class AgentController : MonoBehaviour
         else
         {
             IsStun = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isPlay)
+        {
+            ControlAgent();
         }
     }
 
@@ -138,6 +147,73 @@ public class AgentController : MonoBehaviour
 
         // Dash
         if (dashAction == 1)
+        {
+            if (DashCooldown <= 0f)
+            {
+                direction = transform.forward;
+                AgentRigidbody.AddForce(direction * DashSpeed * CheckOnFieldType(), ForceMode.VelocityChange);
+                DashCooldown = 2.0f;
+                DashDuration = 0.5f;
+                IsDash = true;
+            }
+        }
+
+        transform.Rotate(rotateDirection, Time.fixedDeltaTime * RotateSpeed);
+        AgentRigidbody.AddForce(direction * MoveSpeed * CheckOnFieldType(), ForceMode.VelocityChange);
+
+        if (JumpingTime > 0f)
+        {
+            jumpTargetPosition = new Vector3(AgentRigidbody.position.x, AgentRigidbody.position.y + 1f, AgentRigidbody.position.z) + direction;
+            MoveTowards(jumpTargetPosition, AgentRigidbody, 300, 5);
+        }
+
+        if (!(JumpingTime > 0f) && !CheckOnGround())
+        {
+            AgentRigidbody.AddForce(Vector3.down * FallingForce, ForceMode.Acceleration);
+        }
+        JumpingTime -= Time.fixedDeltaTime;
+    }
+
+    public void ControlAgent()
+    {
+        if (isStun)
+        {
+            return;
+        }
+        Vector3 direction = Vector3.zero;
+        Vector3 rotateDirection = Vector3.zero;
+
+        // Move forward / backward
+        if (Input.GetKey(KeyCode.W))
+        {
+            direction = (CheckOnGround() ? 1f : 0.5f) * 1f * transform.forward;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            direction = (CheckOnGround() ? 1f : 0.5f) * -1f * transform.forward;
+        }
+
+        // Rotate left / right
+        if (Input.GetKey(KeyCode.A))
+        {
+            rotateDirection = transform.up * -1f;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            rotateDirection = transform.up * 1f;
+        }
+
+        // Jumping
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if ((JumpingTime <= 0f) && CanJump())
+            {
+                JumpingTime = 0.2f;
+            }
+        }
+
+        // Dash
+        if (Input.GetKey(KeyCode.F))
         {
             if (DashCooldown <= 0f)
             {
@@ -288,7 +364,7 @@ public class AgentController : MonoBehaviour
                 }
             }
         }
-
+        
         if (collision.collider.CompareTag("collectorAgent") || collision.collider.CompareTag("disruptorAgent"))
         {
             if (collision.collider.TryGetComponent<AgentController>(out AgentController agent))

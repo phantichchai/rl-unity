@@ -18,6 +18,7 @@ public class BattleController : MonoBehaviour
     private void Start()
     {
         envController = area.GetComponent<EnvironmentController>();
+        
     }
 
     private void FixedUpdate()

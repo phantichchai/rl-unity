@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 732316430}
   - component: {fileID: 732316429}
   m_Layer: 5
-  m_Name: DisruptorTeamText
+  m_Name: DisruptorAgentText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Disruptor Team
+  m_text: Disruptor Agent
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -744,7 +744,7 @@ GameObject:
   - component: {fileID: 1234190431}
   - component: {fileID: 1234190430}
   m_Layer: 5
-  m_Name: CollectTeamButton
+  m_Name: CollectAgentButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -876,7 +876,7 @@ GameObject:
   - component: {fileID: 1396649693}
   - component: {fileID: 1396649692}
   m_Layer: 5
-  m_Name: CollectTeamText
+  m_Name: CollectAgentText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -921,7 +921,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Collect Team
+  m_text: Collect Agent
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1200,7 +1200,7 @@ Canvas:
   m_GameObject: {fileID: 1752018879}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 351505042}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1379,7 +1379,7 @@ GameObject:
   - component: {fileID: 1960034131}
   - component: {fileID: 1960034130}
   m_Layer: 5
-  m_Name: DisruptorTeamButton
+  m_Name: DisruptorAgentButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

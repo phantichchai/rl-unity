@@ -9,15 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: c2b40c881d09e7b48ae3b0a5ca17ac1e
   - enabled: 1
+    path: Assets/Scenes/SelectEnvironment.unity
+    guid: 834d6d3943257744d82221ee2f0c7104
+  - enabled: 1
     path: Assets/Scenes/SelectMode.unity
     guid: 4f46211a46cf5ec4f8d80868ac6fc37e
   - enabled: 1
     path: Assets/Scenes/BattleScene.unity
     guid: ae2fac3d7898490409e27a19fdcfa3b4
   - enabled: 1
-    path: Assets/Scenes/CollectTeamScene.unity
-    guid: 483ed0519dfb98a4daa54cfad0799177
-  - enabled: 1
-    path: Assets/Scenes/DisruptorTeamScene.unity
-    guid: 27cca4a1591a26f44b5a7c8e718ea163
+    path: Assets/Scenes/CollectItems.unity
+    guid: ffaeee180bdc3c740a1137c7cb7c7987
   m_configObjects: {}

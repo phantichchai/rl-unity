@@ -16,6 +16,16 @@ public class BattleEnvironmentController : EnvironmentController
         disruptorGroup = new SimpleMultiAgentGroup();
         collectorGroup.RegisterAgent(collectorAgent);
         disruptorGroup.RegisterAgent(disruptorAgent);
+        if (DataSystem.Instance().Mode == Mode.Collector)
+        {
+            collectorAgent.GetComponent<AgentController>().IsPlay = true;
+            collectorAgent.transform.Find("AgentCamera").gameObject.SetActive(true);
+        }
+        else if (DataSystem.Instance().Mode == Mode.Disruptor)
+        {
+            disruptorAgent.GetComponent<AgentController>().IsPlay = true;
+            disruptorAgent.transform.Find("AgentCamera").gameObject.SetActive(true);
+        }
     }
 
     public override void GetItem(Position position)
@@ -61,5 +71,10 @@ public class BattleEnvironmentController : EnvironmentController
     public override void NumberOfItemsAtDestination(int number)
     {
         throw new System.NotImplementedException();
+    }
+
+    public override void GetTouchBorder(Position position)
+    {
+        Debug.Log("Touch border by " + position);
     }
 }

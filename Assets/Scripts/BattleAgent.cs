@@ -5,11 +5,6 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
-public enum Position
-{
-    Collector,
-    Disruptor,
-}
 
 public class BattleAgent : Agent
 {
@@ -27,7 +22,7 @@ public class BattleAgent : Agent
     private Rigidbody agentRB;
 
     public BattleEnvironmentController envController;
-
+    
     public override void Initialize()
     {
         agentController = GetComponent<AgentController>();
@@ -61,6 +56,11 @@ public class BattleAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        if (agentController.Position == Position.Disruptor)
+        {
+            sensor.AddObservation(envController.collectorAgent.transform.localPosition);
+        }
+
         sensor.AddObservation(agentController.CanJump());
         sensor.AddObservation(agentController.DashCooldown);
         sensor.AddObservation(agentController.IsStun);
@@ -101,8 +101,17 @@ public class BattleAgent : Agent
         {
             return;
         }
-
         ActionSegment<int> act = actions.DiscreteActions;
-        agentController.MoveAgent(act);
+
+        //Debug.Log(agentController.Position + " act[0]: " + act[0]);
+        //Debug.Log(agentController.Position + " act[1]: " + act[1]);
+        //Debug.Log(agentController.Position + " act[2]: " + act[2]);
+        //Debug.Log(agentController.Position + " act[3]: " + act[3]);
+        //Debug.Log(agentController.Position + " act[4]: " + act[4]);
+
+        if (!agentController.IsPlay)
+        {
+            agentController.MoveAgent(act);
+        }   
     }
 }
